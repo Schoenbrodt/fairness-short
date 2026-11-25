@@ -5,7 +5,8 @@ groups and fair hiring thresholds. It is based on the larger `fairness-main` app
 the two interactive parts needed for a public, self-guided session.
 
 The underlying study examines fairness in credit scoring; this short version adapts the idea to
-hiring. The €300/€700 model is a didactic simplification.
+hiring. It deliberately omits a monetary value: the quality brake is the number of unsuitable
+hires.
 
 ## Development
 
@@ -23,13 +24,24 @@ npm run preview   # http://localhost:4174/
 
 | Route | Content |
 | --- | --- |
-| `/#/de` / `/#/en` | Landing: automated hiring and the 300 €/700 € value model |
+| `/#/de` / `/#/en` | Landing: automated hiring and the fairness question |
 | `/#/de/groups` / `/#/en/groups` | Two applicant groups |
 | `/#/de/thresholds` / `/#/en/thresholds` | Fair hiring thresholds |
 | `/#/de/about` / `/#/en/about` | Article, authors, licence, funding |
 
 The language comes from the URL. It is remembered in `localStorage` under `fairness.lang`.
 `<html lang>` and the document title follow the active language.
+
+## The fairness check
+
+The thresholds page shows a **4/5 check for the offer rates**: green at 80 % or more, yellow from
+60–80 %, red below 60 %. The 80 % line follows the four-fifths rule; the lower bands are a
+didactic choice. A note makes clear that the check only covers offer rates — the hit-rate
+difference is shown separately — and that it is a rule of thumb, not a statistical test.
+
+Each group card also shows the **number of unsuitable hires**, and the check card sums them as
+**Fehlbesetzungen gesamt**. This is the quality brake: without it, offering everyone a job would
+look perfectly fair.
 
 ## Notes and printing
 
@@ -43,10 +55,10 @@ current charts and metrics.
 
 ```
 src/
-├── components/     # DotPlot, ConfusionMatrix, MetricsTable, Notes, sliders, task boxes, layout
+├── components/     # DotPlot, ConfusionMatrix, FairnessCheck, Notes, sliders, task boxes, layout
 ├── locales/        # de.json, en.json
 ├── pages/          # Introduction, TwoPopulations, FairThresholds, About
-├── utils/          # CSV loading, display labels, metrics, number formatting
+├── utils/          # CSV loading, display labels, metrics, 4/5 check, formatting
 ├── styles/         # global overrides and print styles
 ├── App.jsx         # routes
 ├── i18n.js         # i18next setup

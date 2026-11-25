@@ -82,6 +82,9 @@ export default function TwoPopulations() {
       <Typography variant="body1" paragraph>
         {t('twoPopulations.intro4')}
       </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        {t('twoPopulations.knownOutcomes')}
+      </Typography>
 
       <Box
         sx={{

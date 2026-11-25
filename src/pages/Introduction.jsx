@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const cards = [
-  { title: 'intro.valueTitle', text: 'intro.valueText' },
   { title: 'intro.scoreTitle', text: 'intro.scoreText' },
   { title: 'intro.dataTitle', text: 'intro.dataText' },
 ]
@@ -37,7 +36,7 @@ export default function Introduction() {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
           gap: 2,
           my: 3,
         }}

@@ -25,7 +25,7 @@
     "accuracy": "Accuracy",
     "positiveRate": "Offer rate",
     "truePositiveRate": "Hit rate",
-    "value": "Value",
+    "falseHires": "Unsuitable hires",
     "previous": "Previous",
     "next": "Next"
   },
@@ -36,14 +36,12 @@
   "intro": {
     "title": "Fairness in Hiring",
     "lede": "How should an algorithm decide who gets a job offer?",
-    "p1": "A company wants to hire only applicants who would perform well in the role. Every hiring decision is therefore also a decision about value and cost.",
-    "p2": "A model calculates a suitability score for each application. A decision threshold sets the score from which a job offer is made.",
-    "p3": "The dataset contains 400 fictional applications from two groups: Pinkville and Greenfield. Each group has 100 suitable and 100 unsuitable applicants. Yet the scores are distributed differently in the two groups.",
-    "p4": "You take the role of a fairness advisor: first look at the two applicant groups, then decide where the decision thresholds should be.",
-    "note": "All people and places are fictional. The data and the €300/€700 values are a simplified model.",
+    "p1": "A company uses a model that learned from past hiring decisions and gives every application a suitability score.",
+    "p2": "You set the score from which a job offer is made — separately for the two applicant groups or jointly.",
+    "p3": "The scores are distributed differently in the two groups. The model learned from past decisions in which one group was favoured.",
+    "p4": "First look at the two applicant groups, then decide which decision thresholds are fair.",
+    "note": "All people and places are fictional. In this activity, suitability is assumed to be known for everyone.",
     "start": "Start with the two applicant groups",
-    "valueTitle": "Value and cost",
-    "valueText": "A suitable hire creates €300 in value; an unsuitable hire costs €700. The numbers are a simplified model.",
     "scoreTitle": "Suitability score and decision threshold",
     "scoreText": "Score ≥ threshold: job offer. Score < threshold: no job offer.",
     "dataTitle": "The dataset",
@@ -54,7 +52,7 @@
     "subtitle": "What is in the data?",
     "intro1": "The dataset contains 400 applications: 200 from people in Pinkville and 200 from Greenfield.",
     "intro2": "Each group has 100 suitable and 100 unsuitable applicants. The starting point is therefore the same.",
-    "intro3": "The scores, however, differ: applications from Pinkville receive higher suitability scores on average than applications from Greenfield.",
+    "intro3": "The scores, however, differ: applications from Pinkville receive higher suitability scores on average than applications from Greenfield. The model learned from past decisions in which Pinkville was favoured.",
     "intro4": "This raises the fairness question: what does it mean when a model evaluates two groups differently even though suitability is equally distributed?",
     "scoreHint": "The score ranges from 0 to 100. The higher the score, the more likely the person is suitable for the job.",
     "allPeople": "All 400 applications at a glance",
@@ -62,7 +60,8 @@
     "taskALabel": "Task 1: Compare",
     "taskA": "Describe the differences between the two distributions. How can you tell them apart?",
     "taskBLabel": "Task 2: Evaluate",
-    "taskB": "Why might a single decision threshold be unfair? What should a fair decision take into account?"
+    "taskB": "Why might a single decision threshold be unfair? What should a fair decision take into account?",
+    "knownOutcomes": "In this activity, suitability is known for every application. In reality, it would often only be observable for people who were hired."
   },
   "fairThresholds": {
     "title": "Fair Decision Thresholds!?",
@@ -70,8 +69,9 @@
     "intro": "The two charts show the suitability scores of the two groups separately. Use the sliders to set the score from which a job offer is made. You can choose different thresholds for the two groups — or a single shared threshold.",
     "ruleTitle": "The decision rule",
     "ruleText": "If an application's score is at or above the threshold, the person gets a job offer. If it is below, they do not.",
-    "measuresTitle": "Metrics and confusion matrix",
-    "measuresIntro": "The confusion matrix counts how many decisions are correct and incorrect. Four metrics are calculated from it:",
+    "measuresTitle": "The metrics",
+    "measuresIntro": "Three metrics summarize the decisions:",
+    "detailsTitle": "Accuracy and confusion matrix (for the curious)",
     "confusionHint": "In the confusion matrix, the rows are actual suitability and the columns are the model's prediction.",
     "strategyQuestion": "How should Greenfield's threshold be set?",
     "strategyTitle": "Strategy for Greenfield",
@@ -83,16 +83,13 @@
     "sameTruePositiveRates": "Same hit rates",
     "thresholdPinkville": "Decision threshold Pinkville",
     "thresholdGreenfield": "Decision threshold Greenfield",
-    "totalValue": "Total value: {{value}}",
     "reset": "Reset to 70/70",
     "task1Label": "Task 1: Explore",
-    "task1": "Try the four strategies. Describe what changes for the two groups.",
+    "task1": "Try the four strategies one after another. What happens to the offer rates and hit rates of the two groups?",
     "task2Label": "Task 2: Decide",
-    "task2": "Which thresholds do you choose? Write down both values and explain your choice.",
+    "task2": "Which thresholds do you choose? Explain in one sentence.",
     "task3Label": "Task 3: Evaluate",
-    "task3a": "Which metrics mattered most in your choice? Why?",
-    "task3b": "Is your choice fair? If yes, why? If not, what would be a fair choice?",
-    "task3c": "What is the most important argument for your choice?"
+    "task3": "Is your choice fair? Which metric mattered more to you, and who is disadvantaged by it?"
   },
   "about": {
     "title": "About This Learning Activity",
@@ -121,10 +118,9 @@
     "adaptationNote": "This short version adapts the idea to hiring. The study itself examines fairness in credit scoring."
   },
   "measures": {
-    "defAccuracy": "<b>Accuracy:</b> Share of correct decisions out of all applications.",
-    "defPositiveRate": "<b>Offer rate:</b> Share of applications that receive a job offer (prediction: offer) out of all applications.",
-    "defTruePositiveRate": "<b>Hit rate:</b> Share of suitable applicants who actually receive a job offer.",
-    "defValue": "<b>Value:</b> €300 for every successful hire minus €700 for every unsuitable hire."
+    "defPositiveRate": "<b>Offer rate:</b> Share of applications that receive a job offer.",
+    "defTruePositiveRate": "<b>Hit rate:</b> Share of suitable applicants who receive a job offer.",
+    "defFalseHires": "<b>Unsuitable hires:</b> Number of unsuitable applicants who receive a job offer."
   },
   "notes": {
     "label": "Your note",
@@ -133,5 +129,21 @@
     "clear": "Clear notes",
     "confirmClear": "Delete all notes on this device?",
     "printHint": "Printing includes the current charts and your notes."
+  },
+  "fairnessCheck": {
+    "title": "4/5 check: offer rates",
+    "ratio": "Ratio: {{value}}",
+    "offerRates": "Offer rates: {{a}} · {{b}}",
+    "hitGap": "Hit-rate difference: {{value}} percentage points",
+    "noOffers": "No offers in either group.",
+    "legend": "Green: 80 %+ · Yellow: 60–80 % · Red: below 60 %",
+    "note": "The 80 % line follows the four-fifths rule; the lower bands are a didactic choice. The check only covers offer rates — equal hit rates are a different fairness idea. A rule of thumb, not a statistical test.",
+    "level": {
+      "green": "green",
+      "yellow": "yellow",
+      "red": "red",
+      "none": "no offers"
+    },
+    "falseHiresTotal": "Unsuitable hires in total: {{value}}"
   }
 }

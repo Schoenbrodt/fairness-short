@@ -33,7 +33,6 @@ function pick(metrics) {
     accuracy: metrics.accuracy,
     positiveRate: metrics.positiveRate,
     truePositiveRate: metrics.truePositiveRate,
-    netValue: metrics.netValue,
   }
 }
 
@@ -60,7 +59,6 @@ test('calculates the confusion matrix and metrics at threshold 70', () => {
     accuracy: 61,
     positiveRate: 12,
     truePositiveRate: 23,
-    netValue: 6200,
   })
 
   assert.deepEqual(pick(calculateMetrics(data, 'greenfield', 70)), {
@@ -72,13 +70,13 @@ test('calculates the confusion matrix and metrics at threshold 70', () => {
     accuracy: 54,
     positiveRate: 4,
     truePositiveRate: 9,
-    netValue: 2700,
   })
 })
 
-test('net value follows the 300/700 rule and the full dataset has 400 rows', () => {
-  const metrics = calculateMetrics(data, 'pinkville', 60)
-  assert.equal(metrics.netValue, 300 * metrics.tp - 700 * metrics.fp)
+test('confusion-matrix counts add up to the group size and the full dataset has 400 rows', () => {
+  const group = calculateMetrics(data, 'pinkville', 60)
+  assert.equal(group.total, 200)
+  assert.equal(group.tp + group.fp + group.fn + group.tn, 200)
 
   const all = calculateMetrics(data, null, 70)
   assert.equal(all.total, 400)
@@ -95,7 +93,6 @@ test('an empty group returns zeroes rather than NaN', () => {
     accuracy: 0,
     positiveRate: 0,
     truePositiveRate: 0,
-    netValue: 0,
   })
 })
 

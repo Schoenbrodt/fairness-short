@@ -39,7 +39,6 @@ export function calculateMetrics(data, group = null, threshold = 50) {
     accuracy: percent(tp + tn, total),
     positiveRate: percent(tp + fp, total),
     truePositiveRate: percent(tp, tp + fn),
-    netValue: 300 * tp - 700 * fp,
   }
 }
 

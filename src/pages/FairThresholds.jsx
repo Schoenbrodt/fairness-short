@@ -1,32 +1,67 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import Accordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CircularProgress from '@mui/material/CircularProgress'
-import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { loadCsv } from '../utils/loadData'
 import { getDisplayData, getOutcomeLabel } from '../utils/translateData'
 import { calculateMetrics, findThresholdForMetric } from '../utils/calculateMetrics'
-import { formatCurrency } from '../utils/format'
+import { formatPercent } from '../utils/format'
 import { DotPlot } from '../components/DotPlot'
 import { ConfusionMatrix } from '../components/ConfusionMatrix'
-import { MetricsTable } from '../components/MetricsTable'
-import { ThresholdSlider } from '../components/ThresholdSlider'
+import { FairnessCheck } from '../components/FairnessCheck'
 import { FairnessRadio } from '../components/FairnessRadio'
 import { Notes, NotesActions } from '../components/Notes'
 import { TaskBox } from '../components/TaskBox'
+import { ThresholdSlider } from '../components/ThresholdSlider'
 
 const metricDefinitions = [
-  'measures.defAccuracy',
   'measures.defPositiveRate',
   'measures.defTruePositiveRate',
-  'measures.defValue',
+  'measures.defFalseHires',
 ]
+
+function GroupMetrics({ metrics, lang }) {
+  const { t } = useTranslation()
+
+  return (
+    <Box sx={{ my: 2 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
+        <Box>
+          <Typography variant="caption" color="text.secondary">
+            {t('common.positiveRate')}
+          </Typography>
+          <Typography variant="h4" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+            {formatPercent(metrics.positiveRate, lang)}
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="caption" color="text.secondary">
+            {t('common.truePositiveRate')}
+          </Typography>
+          <Typography variant="h4" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+            {formatPercent(metrics.truePositiveRate, lang)}
+          </Typography>
+        </Box>
+      </Box>
+      <Typography
+        variant="body2"
+        sx={{ mt: 1.5, color: metrics.fp > 0 ? 'error.main' : 'text.secondary' }}
+      >
+        {t('common.falseHires')}: <strong>{metrics.fp}</strong>
+      </Typography>
+    </Box>
+  )
+}
 
 export default function FairThresholds() {
   const { t, i18n } = useTranslation()
@@ -103,7 +138,6 @@ export default function FairThresholds() {
   const greenfieldDisplay = displayData.filter((d) => d.group === 'greenfield')
   const unsuitableLabel = getOutcomeLabel('unsuitable', lang)
   const suitableLabel = getOutcomeLabel('suitable', lang)
-  const totalNetValue = metricsPink.netValue + metricsGreen.netValue
   const isLinked = strategy !== 'independent'
   const showApproximation =
     (strategy === 'samePositiveRates' || strategy === 'sameTruePositiveRates') && !greenLink.exact
@@ -137,7 +171,7 @@ export default function FairThresholds() {
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+            gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
             gap: 1.5,
           }}
         >
@@ -149,9 +183,6 @@ export default function FairThresholds() {
             />
           ))}
         </Box>
-        <Typography variant="body2" sx={{ mt: 1.5 }}>
-          {t('fairThresholds.confusionHint')}
-        </Typography>
       </Paper>
 
       <Card variant="outlined" sx={{ my: 3 }}>
@@ -169,24 +200,10 @@ export default function FairThresholds() {
               {t('fairThresholds.approximateHint')}
             </Alert>
           )}
-          <Divider sx={{ my: 2 }} />
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1.5,
-              flexWrap: 'wrap',
-            }}
-          >
+          <Box sx={{ mt: 2 }}>
             <Button variant="outlined" size="small" onClick={reset}>
               {t('fairThresholds.reset')}
             </Button>
-            <Typography
-              variant="h6"
-              sx={{ ml: { sm: 'auto' }, fontWeight: 700, textAlign: { xs: 'left', sm: 'right' } }}
-            >
-              {t('fairThresholds.totalValue', { value: formatCurrency(totalNetValue, lang) })}
-            </Typography>
           </Box>
         </CardContent>
       </Card>
@@ -216,19 +233,7 @@ export default function FairThresholds() {
               colorRange={['#cab2d6', '#6a3d9a']}
               marginLeft={40}
             />
-            <ConfusionMatrix
-              tp={metricsPink.tp}
-              fp={metricsPink.fp}
-              fn={metricsPink.fn}
-              tn={metricsPink.tn}
-              showSums={false}
-            />
-            <MetricsTable
-              accuracy={metricsPink.accuracy}
-              positiveRate={metricsPink.positiveRate}
-              truePositiveRate={metricsPink.truePositiveRate}
-              netValue={metricsPink.netValue}
-            />
+            <GroupMetrics metrics={metricsPink} lang={lang} />
           </CardContent>
         </Card>
 
@@ -255,22 +260,71 @@ export default function FairThresholds() {
               colorRange={['#b2df8a', '#33a02c']}
               marginLeft={40}
             />
-            <ConfusionMatrix
-              tp={metricsGreen.tp}
-              fp={metricsGreen.fp}
-              fn={metricsGreen.fn}
-              tn={metricsGreen.tn}
-              showSums={false}
-            />
-            <MetricsTable
-              accuracy={metricsGreen.accuracy}
-              positiveRate={metricsGreen.positiveRate}
-              truePositiveRate={metricsGreen.truePositiveRate}
-              netValue={metricsGreen.netValue}
-            />
+            <GroupMetrics metrics={metricsGreen} lang={lang} />
           </CardContent>
         </Card>
       </Box>
+
+      <FairnessCheck
+        offerRateA={metricsPink.positiveRate}
+        offerRateB={metricsGreen.positiveRate}
+        hitRateA={metricsPink.truePositiveRate}
+        hitRateB={metricsGreen.truePositiveRate}
+        falseHiresA={metricsPink.fp}
+        falseHiresB={metricsGreen.fp}
+        lang={lang}
+      />
+
+      <Accordion sx={{ my: 3 }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography sx={{ fontWeight: 600 }}>
+            {t('fairThresholds.detailsTitle')}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography variant="body2" color="text.secondary" paragraph>
+            {t('fairThresholds.confusionHint')}
+          </Typography>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+              gap: 2,
+            }}
+          >
+            <Box>
+              <Typography variant="subtitle2" sx={{ color: '#6a3d9a' }}>
+                {t('fairThresholds.thresholdPinkville')}
+              </Typography>
+              <Typography variant="body2">
+                {t('common.accuracy')}: {formatPercent(metricsPink.accuracy, lang)}
+              </Typography>
+              <ConfusionMatrix
+                tp={metricsPink.tp}
+                fp={metricsPink.fp}
+                fn={metricsPink.fn}
+                tn={metricsPink.tn}
+                showSums={false}
+              />
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" sx={{ color: '#33a02c' }}>
+                {t('fairThresholds.thresholdGreenfield')}
+              </Typography>
+              <Typography variant="body2">
+                {t('common.accuracy')}: {formatPercent(metricsGreen.accuracy, lang)}
+              </Typography>
+              <ConfusionMatrix
+                tp={metricsGreen.tp}
+                fp={metricsGreen.fp}
+                fn={metricsGreen.fn}
+                tn={metricsGreen.tn}
+                showSums={false}
+              />
+            </Box>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
 
       <Typography variant="h5" sx={{ mt: 4 }}>
         {t('common.tasks')}
@@ -292,11 +346,9 @@ export default function FairThresholds() {
       </TaskBox>
 
       <TaskBox label={t('fairThresholds.task3Label')} icon="pencil-alt">
-        <ol type="a">
-          <li>{t('fairThresholds.task3a')}</li>
-          <li>{t('fairThresholds.task3b')}</li>
-          <li>{t('fairThresholds.task3c')}</li>
-        </ol>
+        <Typography variant="body2" paragraph>
+          {t('fairThresholds.task3')}
+        </Typography>
         <Notes id="thresholds-3" />
       </TaskBox>
     </Box>
