@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as Plot from '@observablehq/plot'
 import Paper from '@mui/material/Paper'
 
@@ -25,17 +25,19 @@ export function DotPlot({
   const containerRef = useRef(null)
   const [measuredWidth, setMeasuredWidth] = useState(null)
 
-  const resizeRef = useCallback((node) => {
-    containerRef.current = node
+  useEffect(() => {
+    const node = containerRef.current
     if (!node) return
-    const ro = new ResizeObserver((entries) => {
+
+    const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const w = entry.contentBoxSize?.[0]?.inlineSize ?? entry.contentRect.width
         if (w > 0) setMeasuredWidth(w)
       }
     })
-    ro.observe(node)
-    return () => ro.disconnect()
+    observer.observe(node)
+
+    return () => observer.disconnect()
   }, [])
 
   const width = widthProp ?? measuredWidth ?? 300
@@ -154,7 +156,7 @@ export function DotPlot({
         borderRadius: 2,
       }}
     >
-      <div ref={resizeRef} className="dot-plot-container" />
+      <div ref={containerRef} className="dot-plot-container" />
     </Paper>
   )
 }

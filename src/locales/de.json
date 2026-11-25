@@ -7,24 +7,13 @@
   },
   "nav": {
     "intro": "Einleitung: Faire Kreditvergabe",
-    "loanProfit": "I. Kreditvergabe und Gesamtgewinn",
-    "dataIntro": "II. Die Daten verstehen",
-    "dataset": "III. Der Datensatz",
-    "measures": "IV. Statistische Gütemaße",
-    "threshold": "V. Variable Entscheidungsgrenze",
-    "twoGroups": "VI. Zwei Personengruppen",
-    "fair": "VII. Faire Entscheidungsgrenzen!?",
-    "discussion": "VIII. Diskussion",
     "introShort": "Einleitung",
-    "loanProfitShort": "Gewinn",
-    "dataIntroShort": "Daten",
-    "datasetShort": "Datensatz",
-    "measuresShort": "Gütemaße",
-    "thresholdShort": "Grenze",
+    "twoGroups": "VI. Zwei Personengruppen",
     "twoGroupsShort": "Gruppen",
+    "fair": "VII. Faire Entscheidungsgrenzen!?",
     "fairShort": "Fairness",
-    "discussionShort": "Diskussion",
-    "about": "Über"
+    "about": "Über",
+    "learningPath": "Lernpfad"
   },
   "common": {
     "checkResult": "Ergebnis überprüfen",
@@ -61,70 +50,6 @@
     "p2": "Gleichzeitig sind Banken dazu verpflichtet, unterschiedliche Personengruppen hinsichtlich gewisser geschützter Merkmale (Geschlecht, Herkunft, Religion) nicht zu diskriminieren.",
     "p3": "Jeder, der einen Kredit beantragt, möchte diesen unabhängig von solchen geschützten Merkmalen oder Zugehörigkeiten erhalten. <b>In diesem Lernmodul</b> kannst du verschiedene Strategien entwickeln und ausprobieren, um Kredite möglichst fair an verschiedene Personengruppen zu verteilen. Dazu erkundest du zunächst die zugrundeliegenden Daten, entwickelst ein Entscheidungssystem zur Vergabe von Krediten, bewertest dieses und passt es unter dem Gesichtspunkt der Fairness an."
   },
-  "loanProfit": {
-    "title": "Kreditvergabe und Gesamtgewinn",
-    "situationIntro": "Das ist unsere Ausgangssituation: Eine Bank vergibt Kredite von {{totalCredit}}€.",
-    "pointPayback": "Personen, die einen Kredit erhalten und zurückzahlen, zahlen den Betrag mit {{interestPercent}} % Zinsen zurück. Das heißt, die Bank erhält {{totalReturn}}€ zurück.",
-    "pointLoss": "Vergibt die Bank einen Kredit an eine Personen, die diesen nicht oder nur teilweise zurückzahlen, macht die Bank {{loss}}€ Verlust pro Person (Hinweis: Die Bank ist versichert, daher verliert sie meist nicht den vollen Betrag).",
-    "taskFill": "Fülle nun die folgende Tabelle aus.",
-    "headerDescription": "Beschreibung",
-    "headerAmount": "Betrag in €",
-    "rowProfit": "Gewinn der Bank: Kredit genehmigt und Person zahlt zurück",
-    "rowLoss": "Verlust der Bank: Kredit genehmigt und Person zahlt nicht zurück",
-    "rowTotal": "Gesamtgewinn bei {{payback}} Personen die ihren Kredit zurückzahlen und {{noPayback}} Personen die ihren Kredit nicht zurückzahlen"
-  },
-  "histogram": {
-    "title": "Die Daten verstehen",
-    "intro1": "Für Banken ist es relevant, möglichst genau vorherzusagen, ob ein neuer Kunde einen Kredit mit hoher Wahrscheinlichkeit zurückzahlt oder nicht. Im Finanzwesen wird dazu oft mit mathematischen Modellen gearbeitet, die jeder Person einen Kreditscore (z. B. der Schufa-Score) zuordnen. Wir gehen davon aus, dass zur Berechnung des Kreditscores verlässliche Daten verarbeitet wurden und nehmen den Kreditscore als ein sinnvolles Maß für die Kreditwürdigkeit einer Person an.",
-    "intro2": "In diesem Lernmodul verwenden wir fiktive Daten von zahlreichen Kreditanwärter*innen, die aber genau so in der Vergangenheit hätten zustande kommen können. Für diese Personen wurde der Kreditscore zwischen 0 (Kredit wird eher nicht zurückgezahlt) und 100 (Kredit wird sehr wahrscheinlich zurückgezahlt) berechnet. Außerdem ist bekannt, ob jede dieser Personen ihren Kredit in der Vergangenheit tatsächlich zurückgezahlt hat oder nicht.",
-    "intro3": "Bevor wir mit einem größeren Datensatz arbeiten, wirst du zunächst die Struktur der Daten erkunden und wie sie mit Hilfe von Punktdiagrammen visualisiert werden können. In den Diagrammen repräsentiert jeder Punkt eine Person.",
-    "dataset": "Datensatz {{n}}",
-    "tableIntro": "Hier siehst du eine Tabelle mit fiktiven, aber realistischen Daten.",
-    "tableIntroAnother": "Hier siehst du eine weitere Tabelle.",
-    "task1": "Welches der folgenden Punktdiagramme A, B oder C repräsentiert die Daten aus der Tabelle? Du kannst die Tabelle nach Namen, Kreditscore oder Zahlungsfähigkeit sortieren, indem du auf den Titel der jeweiligen Spalte klickst. Scrolle durch die Tabelle, um alle Einträge zu sehen. Notiere deine Antwort.",
-    "task2": "Welches Punktdiagramm repräsentiert die Daten in der Tabelle? Notiere deine Antwort.",
-    "task3": "Welches Punktdiagramm repräsentiert die Daten in der Tabelle? Notiere deine Antwort.",
-    "checkAnswers": "Überprüfe nun deine Antworten",
-    "correctOption": "Richtige Option (A, B oder C)",
-    "option": "Option",
-    "headerName": "Name",
-    "headerType": "Zahlungsfähigkeit in Vergangenheit",
-    "headerScore": "Kreditscore"
-  },
-  "datasetPage": {
-    "title": "Der Datensatz",
-    "intro": "Ab sofort arbeiten wir mit einem größeren Datensatz. Dieser besteht aus Daten von {{count}} Personen. Davon sind {{repay}} Personen zahlungsfähig (\"zahlt zurück\") und {{noRepay}} Personen nicht zahlungsfähig (\"zahlt nicht zurück\").",
-    "task1": "Wie muss die Entscheidungsgrenze gewählt werden, damit ausschließlich Personen einen Kredit erhalten, die auch zurückzahlen können?",
-    "task2": "Wie muss die Entscheidungsgrenze gewählt werden, damit alle Personen einen Kredit erhalten, die auch zurückzahlen können?",
-    "task3": "Ab welchem Kreditscore würdest du einen Kredit vergeben? Begründe deine Antwort basierend auf dem dargestellten Datensatz."
-  },
-  "measures": {
-    "title": "Statistische Gütemaße",
-    "subtitle": "Ist die Entscheidungsgrenze wirklich gut gewählt?",
-    "intro1": "Zur Beantwortung dieser Frage und zur Validierung des Kreditvergabesystems werden wir den Gesamtprofit sowie verschiedene statische Gütemaße nutzen.",
-    "intro2": "Die Entscheidungsgrenze nutzen wir zur Vorhersage. Hat eine Person einen Kreditscore größer oder gleich unserer Entscheidungsgrenze, so sagen wir voraus, dass diese Person den Kredit zurückzahlen wird. Bei einem Kreditscore kleiner als unsere Entscheidungsgrenze sagen wir voraus, dass diese Person den Kredit nicht zurückzahlen wird.",
-    "intro3": "Die Entscheidungsgrenze wurde zunächst fest auf 70 gesetzt. Für alle Personen mit einem Score größer oder gleich 70 gehen wir davon aus, dass sie den Kredit zurückzahlen werden (Vorhersage: zahlt zurück). Für alle Personen mit einem Score unter 70 gehen wir davon aus, dass sie den Kredit nicht zurückzahlen werden (Vorhersage: zahlt nicht zurück). Diese Vorhersagen können wir nun mit den vorliegenden Daten vergleichen.",
-    "reminder": "Erinnerung: Wir arbeiten mit Daten von Personen, bei denen bekannt ist, ob sie ihren Kredit in der Vergangenheit zurückgezahlt haben (Daten: zahlt zurück oder Daten: zahlt nicht zurück) und nutzen dies zum Abgleich mit unserer Vorhersage.",
-    "confusionTitle": "Die Konfusionsmatrix",
-    "confusionIntro": "Die Anzahl der richtigen und falschen Vorhersagen für beide Personengruppen (\"zahlt zurück\" und \"zahlt nicht zurück\") sind in der folgenden Tabelle dargestellt. Diese Tabelle wird auch als Konfusionsmatrix bezeichnet.",
-    "task1": "Wie viele Personen erhalten bei einer Entscheidungsgrenze von 70 insgesamt einen Kredit?",
-    "task2": "Wie viele Personen erhalten bei einer Entscheidungsgrenze von 70 einen Kredit, obwohl sie nicht zahlungsfähig sind?",
-    "evaluationTitle": "Bewertung des Entscheidungsmodells",
-    "evaluationIntro": "Es gibt verschiedene Gütemaße, die wir zur Bewertung unseres Modells verwenden können:",
-    "defAccuracy": "<b>Genauigkeit:</b> Die Genauigkeit gibt den prozentualen Anteil der richtigen Vorhersagen an der Gesamtzahl aller Datenpunkte an.",
-    "defPositiveRate": "<b>Positivrate:</b> Die Positivrate gibt den prozentualen Anteil der positiven Vorhersagen (Vorhersage: zahlt zurück) an der Gesamtzahl aller Datenpunkte an.",
-    "defTruePositiveRate": "<b>Richtig-positiv-Rate:</b> Die Richtig-positiv-Rate gibt den prozentualen Anteil der richtig positiven Vorhersagen (richtig als \"zahlt zurück\" vorhergesagt) an der Anzahl aller tatsächlich positiven Datenpunkte (Daten: zahlt zurück) an.",
-    "defProfit": "<b>Gewinn:</b> Erzielter Gesamtgewinn der Bank (Erinnerung: die Bank erhält 300€ für jeden zurückgezahlten Kredit und verliert 700€ für jeden nicht zurückgezahlten Kredit).",
-    "task3": "Berechne die Werte der vier Gütemaße. Nutze dazu die Werte in der Konfusionsmatrix. Trage deine Ergebnisse in der folgenden Tabelle ein. Gib das Ergebnis in Prozent bzw. Euro an und runde stets auf ganzzahlige Werte.",
-    "task4": "Wieviel Prozent der Personen, die zahlungsfähig sind, erhalten auch tatsächlich einen Kredit?",
-    "task5": "Wieviel Prozent der Personen im Datensatz erhalten einen Kredit?"
-  },
-  "variableThreshold": {
-    "title": "Variable Entscheidungsgrenze",
-    "intro": "Jetzt kannst du die Entscheidungsgrenze variieren und die aus deiner Sicht optimale Entscheidungsgrenze festlegen.",
-    "task": "Welcher Wert stellt aus deiner Sicht eine optimale Entscheidungsgrenze dar? Notiere den Wert und begründe deine Wahl.",
-    "predictionAt": "Unsere Vorhersage bei einer Entscheidungsgrenze von {{threshold}}:"
-  },
   "twoPopulations": {
     "title": "Zwei Personengruppen",
     "subtitle": "Was finden wir wirklich in unseren Daten?",
@@ -155,12 +80,6 @@
     "thresholdGreenfield": "Entscheidungsgrenze Grünhausen",
     "totalProfit": "Der Gesamtgewinn der Bank beträgt {{profit}}€."
   },
-  "discussion": {
-    "title": "Diskussion",
-    "intro": "Ob die Kreditvergabe fair erfolgt, hängt offenkundig von der Definition von \"fair\" ab. Sie hängt aber auch davon ab, welche Daten zur Berechnung des Kreditscores erhoben werden und wie der Score berechnet wird. Wenn sich die Unterschiede zwischen Pinklandia und Grünhausen durch Daten ergeben, auf die die jeweiligen Personen keinen Einfluss haben oder die für die Genauigkeit des Scores irrelevant sind (wie etwa ihre Hautfarbe), könnte das unfair sein.",
-    "task1": "Diskutiert die folgende Frage und beantwortet sie dann auf dem Antwortblatt:",
-    "task1a": "Welche Kriterien für die Datenerhebung und Berechnung des Kreditscores wären nach eurer Definition von \"Fairness\" fair? Welche wären unfair?"
-  },
   "about": {
     "title": "Über dieses Lernmodul",
     "articleTitle": "Wissenschaftlicher Artikel",
@@ -179,5 +98,26 @@
     "fundingTitle": "Förderung",
     "fundingText": "Dieses Projekt wird von der Hector Stiftung II gefördert.",
     "backToModule": "Zurück zum Lernmodul"
+  },
+  "measures": {
+    "title": "Statistische Gütemaße",
+    "subtitle": "Ist die Entscheidungsgrenze wirklich gut gewählt?",
+    "intro1": "Zur Beantwortung dieser Frage und zur Validierung des Kreditvergabesystems werden wir den Gesamtprofit sowie verschiedene statische Gütemaße nutzen.",
+    "intro2": "Die Entscheidungsgrenze nutzen wir zur Vorhersage. Hat eine Person einen Kreditscore größer oder gleich unserer Entscheidungsgrenze, so sagen wir voraus, dass diese Person den Kredit zurückzahlen wird. Bei einem Kreditscore kleiner als unsere Entscheidungsgrenze sagen wir voraus, dass diese Person den Kredit nicht zurückzahlen wird.",
+    "intro3": "Die Entscheidungsgrenze wurde zunächst fest auf 70 gesetzt. Für alle Personen mit einem Score größer oder gleich 70 gehen wir davon aus, dass sie den Kredit zurückzahlen werden (Vorhersage: zahlt zurück). Für alle Personen mit einem Score unter 70 gehen wir davon aus, dass sie den Kredit nicht zurückzahlen werden (Vorhersage: zahlt nicht zurück). Diese Vorhersagen können wir nun mit den vorliegenden Daten vergleichen.",
+    "reminder": "Erinnerung: Wir arbeiten mit Daten von Personen, bei denen bekannt ist, ob sie ihren Kredit in der Vergangenheit zurückgezahlt haben (Daten: zahlt zurück oder Daten: zahlt nicht zurück) und nutzen dies zum Abgleich mit unserer Vorhersage.",
+    "confusionTitle": "Die Konfusionsmatrix",
+    "confusionIntro": "Die Anzahl der richtigen und falschen Vorhersagen für beide Personengruppen (\"zahlt zurück\" und \"zahlt nicht zurück\") sind in der folgenden Tabelle dargestellt. Diese Tabelle wird auch als Konfusionsmatrix bezeichnet.",
+    "task1": "Wie viele Personen erhalten bei einer Entscheidungsgrenze von 70 insgesamt einen Kredit?",
+    "task2": "Wie viele Personen erhalten bei einer Entscheidungsgrenze von 70 einen Kredit, obwohl sie nicht zahlungsfähig sind?",
+    "evaluationTitle": "Bewertung des Entscheidungsmodells",
+    "evaluationIntro": "Es gibt verschiedene Gütemaße, die wir zur Bewertung unseres Modells verwenden können:",
+    "defAccuracy": "<b>Genauigkeit:</b> Die Genauigkeit gibt den prozentualen Anteil der richtigen Vorhersagen an der Gesamtzahl aller Datenpunkte an.",
+    "defPositiveRate": "<b>Positivrate:</b> Die Positivrate gibt den prozentualen Anteil der positiven Vorhersagen (Vorhersage: zahlt zurück) an der Gesamtzahl aller Datenpunkte an.",
+    "defTruePositiveRate": "<b>Richtig-positiv-Rate:</b> Die Richtig-positiv-Rate gibt den prozentualen Anteil der richtig positiven Vorhersagen (richtig als \"zahlt zurück\" vorhergesagt) an der Anzahl aller tatsächlich positiven Datenpunkte (Daten: zahlt zurück) an.",
+    "defProfit": "<b>Gewinn:</b> Erzielter Gesamtgewinn der Bank (Erinnerung: die Bank erhält 300€ für jeden zurückgezahlten Kredit und verliert 700€ für jeden nicht zurückgezahlten Kredit).",
+    "task3": "Berechne die Werte der vier Gütemaße. Nutze dazu die Werte in der Konfusionsmatrix. Trage deine Ergebnisse in der folgenden Tabelle ein. Gib das Ergebnis in Prozent bzw. Euro an und runde stets auf ganzzahlige Werte.",
+    "task4": "Wieviel Prozent der Personen, die zahlungsfähig sind, erhalten auch tatsächlich einen Kredit?",
+    "task5": "Wieviel Prozent der Personen im Datensatz erhalten einen Kredit?"
   }
 }

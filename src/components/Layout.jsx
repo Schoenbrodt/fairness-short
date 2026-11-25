@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -7,71 +7,80 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import Divider from '@mui/material/Divider'
-import DownloadIcon from '@mui/icons-material/Download'
 import TranslateIcon from '@mui/icons-material/Translate'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { LearningPath, pages } from './LearningPath'
-import { useEventLog, downloadEvents } from '../events'
+import { StepNav, steps } from './StepNav'
+import { DEFAULT_LANG, isLang } from '../lang'
 
 export function Layout() {
   const { t, i18n } = useTranslation()
   const { lang } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
-  const log = useEventLog()
 
   useEffect(() => {
-    if (lang && lang !== i18n.language) {
-      i18n.changeLanguage(lang)
+    if (isLang(lang) && lang !== i18n.resolvedLanguage) {
+      void i18n.changeLanguage(lang)
     }
   }, [lang, i18n])
 
-  useEffect(() => {
-    log?.('navigated', 'page', { to: location.pathname })
-  }, [location.pathname, log])
+  if (!isLang(lang)) {
+    return <Navigate to={`/${DEFAULT_LANG}`} replace />
+  }
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === 'de' ? 'en' : 'de'
-    const currentPath = location.pathname.replace(`/${i18n.language}`, '')
-    i18n.changeLanguage(newLang)
+    const currentLang = isLang(i18n.resolvedLanguage) ? i18n.resolvedLanguage : lang
+    const newLang = currentLang === 'de' ? 'en' : 'de'
+    const currentPath = location.pathname.replace(/^\/(de|en)(?=\/|$)/, '')
+    void i18n.changeLanguage(newLang)
     navigate(`/${newLang}${currentPath}`)
   }
 
   const isAboutPage = location.pathname === `/${lang}/about`
 
-  const currentIndex = pages.findIndex((page) => {
-    const full = `/${lang}${page.path}`
-    if (page.path === '') return location.pathname === `/${lang}` || location.pathname === `/${lang}/`
+  const currentIndex = steps.findIndex((step) => {
+    const full = `/${lang}${step.path}`
+    if (step.path === '') {
+      return location.pathname === full || location.pathname === `${full}/`
+    }
     return location.pathname === full
   })
 
   const hasPrev = currentIndex > 0
-  const hasNext = currentIndex < pages.length - 1
+  const hasNext = currentIndex >= 0 && currentIndex < steps.length - 1
 
   const goToPrev = () => {
     if (hasPrev) {
-      navigate(`/${lang}${pages[currentIndex - 1].path}`)
+      navigate(`/${lang}${steps[currentIndex - 1].path}`)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
   const goToNext = () => {
     if (hasNext) {
-      navigate(`/${lang}${pages[currentIndex + 1].path}`)
+      navigate(`/${lang}${steps[currentIndex + 1].path}`)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: 'background.default' }}>
-      {/* Top bar: title + language toggle */}
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        bgcolor: 'background.default',
+      }}
+    >
+      {/* Top bar: title, about, language */}
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          gap: 2,
           px: { xs: 2, sm: 4 },
           py: 1.5,
           borderBottom: '1px solid',
@@ -85,16 +94,18 @@ export function Layout() {
           sx={{
             color: 'primary.dark',
             cursor: 'pointer',
+            lineHeight: 1.3,
             '&:hover': { color: 'primary.main' },
           }}
           onClick={() => navigate(`/${lang}`)}
         >
           {t('app.title')}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
           <Tooltip title={t('nav.about')}>
             <IconButton
               size="small"
+              aria-label={t('nav.about')}
               onClick={() => navigate(`/${lang}/about`)}
               sx={{
                 color: isAboutPage ? 'primary.main' : 'text.secondary',
@@ -102,11 +113,6 @@ export function Layout() {
               }}
             >
               <InfoOutlinedIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title={t('common.downloadEvents', 'Download events')}>
-            <IconButton size="small" onClick={downloadEvents} sx={{ color: 'text.secondary' }}>
-              <DownloadIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Button
@@ -121,10 +127,10 @@ export function Layout() {
         </Box>
       </Box>
 
-      {/* Learning path stepper (hidden on About page) */}
+      {/* Three-step path (hidden on the About page) */}
       {!isAboutPage && (
         <Box sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper' }}>
-          <LearningPath lang={lang} />
+          <StepNav lang={lang} />
         </Box>
       )}
 
@@ -141,6 +147,7 @@ export function Layout() {
       >
         <Box
           component="main"
+          key={i18n.resolvedLanguage}
           sx={{
             width: '100%',
             maxWidth: 800,
@@ -148,7 +155,7 @@ export function Layout() {
         >
           <Outlet />
 
-          {/* Prev / Next navigation (hidden on About page) */}
+          {/* Prev / Next navigation (hidden on About) */}
           {!isAboutPage && (
             <>
               <Divider sx={{ mt: 5, mb: 3 }} />
@@ -174,9 +181,11 @@ export function Layout() {
                   {t('common.previous')}
                 </Button>
 
-                <Typography variant="caption" color="text.secondary">
-                  {currentIndex + 1} / {pages.length}
-                </Typography>
+                {currentIndex >= 0 && (
+                  <Typography variant="caption" color="text.secondary">
+                    {currentIndex + 1} / {steps.length}
+                  </Typography>
+                )}
 
                 <Button
                   variant="contained"

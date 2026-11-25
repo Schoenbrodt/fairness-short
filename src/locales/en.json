@@ -7,24 +7,13 @@
   },
   "nav": {
     "intro": "Introduction: Fair Credit Granting",
-    "loanProfit": "I. Credit granting and total profit",
-    "dataIntro": "II. Understanding the data",
-    "dataset": "III. The data set",
-    "measures": "IV. Statistical measures",
-    "threshold": "V. Variable decision threshold",
-    "twoGroups": "VI. Two populations",
-    "fair": "VII. Fair decision thresholds!?",
-    "discussion": "VIII. Discussion",
     "introShort": "Intro",
-    "loanProfitShort": "Profit",
-    "dataIntroShort": "Data",
-    "datasetShort": "Dataset",
-    "measuresShort": "Measures",
-    "thresholdShort": "Threshold",
+    "twoGroups": "VI. Two populations",
     "twoGroupsShort": "Groups",
+    "fair": "VII. Fair decision thresholds!?",
     "fairShort": "Fairness",
-    "discussionShort": "Discussion",
-    "about": "About"
+    "about": "About",
+    "learningPath": "Learning path"
   },
   "common": {
     "checkResult": "Check result",
@@ -61,70 +50,6 @@
     "p2": "At the same time, banks are required not to discriminate against different groups of people based on certain protected characteristics (such as gender, origin, religion).",
     "p3": "Anyone applying for a loan wants to be evaluated independently of such protected traits or affiliations. In this learning module, you will develop and try out various strategies for distributing loans as \"fairly\" as possible among different groups of people. To do this, you will first explore the underlying data, develop a decision-making system for loan approval, evaluate it, and then implement various fairness strategies."
   },
-  "loanProfit": {
-    "title": "Loan Approval and Total Profit",
-    "situationIntro": "This is our starting point: A bank gives out loans of {{totalCredit}}€.",
-    "pointPayback": "People who receive a loan and repay it do so with {{interestPercent}}% interest. This means the bank receives {{totalReturn}}€ back.",
-    "pointLoss": "If the bank gives a loan to someone who does not repay it or only repays part of it, the bank incurs a loss of {{loss}}€ per person. (Note: The bank is insured, so it typically does not lose the full amount.)",
-    "taskFill": "Now fill out the following table.",
-    "headerDescription": "Description",
-    "headerAmount": "Amount in €",
-    "rowProfit": "Bank's profit: Loan approved and person repays",
-    "rowLoss": "Bank's loss: Loan approved and person does not repay",
-    "rowTotal": "Total profit for {{payback}} people who repay their loan and {{noPayback}} people who do not repay"
-  },
-  "histogram": {
-    "title": "Understanding the Data",
-    "intro1": "For banks, it's important to accurately predict whether a new customer is likely to repay a loan. In finance, mathematical models are often used to assign each person a credit score (e.g., the Schufa score). We assume that reliable data was used to calculate the credit score, and we treat the credit score as a meaningful measure of a person's creditworthiness.",
-    "intro2": "In this learning module, we use fictional data from many loan applicants that could have realistically occurred in the past. Each of these individuals has a credit score between 0 (loan is unlikely to be repaid) and 100 (loan is very likely to be repaid). We also know whether each person actually repaid their loan in the past or not.",
-    "intro3": "Before working with a larger dataset, you will first explore the structure of the data and how it can be visualized using scatter plots. In the plots, each point represents one person.",
-    "dataset": "Dataset {{n}}",
-    "tableIntro": "Here is a table with fictional but realistic data.",
-    "tableIntroAnother": "Here is another table.",
-    "task1": "Which of the following scatter plots A, B, or C represents the data from the table? You can sort the table by name, credit score, or past payment reliability by clicking the column headers. Scroll through the table to see all entries.",
-    "task2": "Which scatter plot represents the data in the table?",
-    "task3": "Which scatter plot represents the data in the table?",
-    "checkAnswers": "Now check your answers",
-    "correctOption": "Correct Option (A, B or C)",
-    "option": "Option",
-    "headerName": "Name",
-    "headerType": "Past Payment Reliability",
-    "headerScore": "Credit Score"
-  },
-  "datasetPage": {
-    "title": "The Dataset",
-    "intro": "From now on, we are working with a larger dataset. It consists of data from {{count}} individuals. Of these, {{repay}} are creditworthy (\"repays\") and {{noRepay}} are not creditworthy (\"does not repay\").",
-    "task1": "What decision threshold ensures that <b>only</b> individuals who will repay the loan are granted credit?",
-    "task2": "What decision threshold ensures that <b>all</b> individuals who will repay the loan are granted credit?",
-    "task3": "At what credit score would you grant a loan? Justify your answer based on the dataset."
-  },
-  "measures": {
-    "title": "Statistical Measures",
-    "subtitle": "Is the decision threshold really well chosen?",
-    "intro1": "To answer this question and validate the credit approval system, we will use total profit and various statistical measures.",
-    "intro2": "The decision threshold is used for prediction. If a person has a credit score greater than or equal to the threshold, we predict they will repay the loan. If their score is below the threshold, we predict they will not repay.",
-    "intro3": "The threshold was initially fixed at 70. For all persons with a score >= 70, we predict repayment. For all others, we predict non-repayment. These predictions can now be compared with the known outcomes.",
-    "reminder": "Reminder: We are working with data of individuals for whom it is known whether they repaid their loan in the past, and we use this to compare with our predictions.",
-    "confusionTitle": "The Confusion Matrix",
-    "confusionIntro": "The number of correct and incorrect predictions for both groups (\"repays\" and \"does not repay\") is shown in the table below. This table is also called a confusion matrix.",
-    "task1": "How many people receive a loan with a threshold of 70?",
-    "task2": "How many people receive a loan at threshold 70 who are not creditworthy?",
-    "evaluationTitle": "Evaluating the Credit Granting Model",
-    "evaluationIntro": "There are several statistical measures we can use to evaluate our model:",
-    "defAccuracy": "<b>Accuracy:</b> Percentage of correct predictions out of all data points.",
-    "defPositiveRate": "<b>Positive Rate:</b> Percentage of positive predictions (predicts: repays) out of all data points.",
-    "defTruePositiveRate": "<b>True Positive Rate:</b> Percentage of correct positive predictions out of all actual positive cases (data: repays).",
-    "defProfit": "<b>Profit:</b> Total profit of the bank (Reminder: the bank earns €300 for each repaid loan and loses €700 for each not repaid loan).",
-    "task3": "Calculate the values of the four statistical measures using the confusion matrix. Enter your results in the table below.",
-    "task4": "What percentage of creditworthy individuals actually receive a loan?",
-    "task5": "What percentage of individuals in the dataset receive a loan?"
-  },
-  "variableThreshold": {
-    "title": "Variable Decision Threshold",
-    "intro": "Now you can vary the decision threshold and determine what you consider the optimal value.",
-    "task": "What value do you consider to be the optimal decision threshold? Record the value and justify your choice.",
-    "predictionAt": "Our prediction at a decision threshold of {{threshold}}:"
-  },
   "twoPopulations": {
     "title": "Two Population Groups",
     "subtitle": "What do we really find in our data?",
@@ -155,12 +80,6 @@
     "thresholdGreenfield": "Decision Threshold Greenfield",
     "totalProfit": "The total profit of the bank is {{profit}}€."
   },
-  "discussion": {
-    "title": "Discussion",
-    "intro": "Whether credit is granted fairly obviously depends on the definition of \"fair.\" But it also depends on what data is collected to calculate the credit score and how the score is computed. If the differences between Pinkville and Greenfield result from data that individuals have no control over or that is irrelevant to the score's accuracy (such as skin color), this could be unfair.",
-    "task1": "Discuss the following question and write down your answer:",
-    "task1a": "Which criteria for data collection and credit score calculation would be fair according to your definition of \"fairness\"? Which would be unfair?"
-  },
   "about": {
     "title": "About This Learning Module",
     "articleTitle": "Scientific Article",
@@ -179,5 +98,26 @@
     "fundingTitle": "Funding",
     "fundingText": "This project is supported by the Hector Stiftung II.",
     "backToModule": "Back to learning module"
+  },
+  "measures": {
+    "title": "Statistical Measures",
+    "subtitle": "Is the decision threshold really well chosen?",
+    "intro1": "To answer this question and validate the credit approval system, we will use total profit and various statistical measures.",
+    "intro2": "The decision threshold is used for prediction. If a person has a credit score greater than or equal to the threshold, we predict they will repay the loan. If their score is below the threshold, we predict they will not repay.",
+    "intro3": "The threshold was initially fixed at 70. For all persons with a score >= 70, we predict repayment. For all others, we predict non-repayment. These predictions can now be compared with the known outcomes.",
+    "reminder": "Reminder: We are working with data of individuals for whom it is known whether they repaid their loan in the past, and we use this to compare with our predictions.",
+    "confusionTitle": "The Confusion Matrix",
+    "confusionIntro": "The number of correct and incorrect predictions for both groups (\"repays\" and \"does not repay\") is shown in the table below. This table is also called a confusion matrix.",
+    "task1": "How many people receive a loan with a threshold of 70?",
+    "task2": "How many people receive a loan at threshold 70 who are not creditworthy?",
+    "evaluationTitle": "Evaluating the Credit Granting Model",
+    "evaluationIntro": "There are several statistical measures we can use to evaluate our model:",
+    "defAccuracy": "<b>Accuracy:</b> Percentage of correct predictions out of all data points.",
+    "defPositiveRate": "<b>Positive Rate:</b> Percentage of positive predictions (predicts: repays) out of all data points.",
+    "defTruePositiveRate": "<b>True Positive Rate:</b> Percentage of correct positive predictions out of all actual positive cases (data: repays).",
+    "defProfit": "<b>Profit:</b> Total profit of the bank (Reminder: the bank earns €300 for each repaid loan and loses €700 for each not repaid loan).",
+    "task3": "Calculate the values of the four statistical measures using the confusion matrix. Enter your results in the table below.",
+    "task4": "What percentage of creditworthy individuals actually receive a loan?",
+    "task5": "What percentage of individuals in the dataset receive a loan?"
   }
 }

@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { useEventLog } from '../events'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -8,7 +7,6 @@ import Radio from '@mui/material/Radio'
 
 export function FairnessRadio({ value, onChange }) {
   const { t } = useTranslation()
-  const log = useEventLog()
 
   const options = [
     { key: 'independent', label: t('fairThresholds.independent') },
@@ -17,12 +15,6 @@ export function FairnessRadio({ value, onChange }) {
     { key: 'sameTruePositiveRates', label: t('fairThresholds.sameTruePositiveRates') },
   ]
 
-  const handleChange = (e) => {
-    const strategy = e.target.value
-    onChange(strategy)
-    log?.('selected', 'fairness-radio', { strategy })
-  }
-
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend" sx={{ fontWeight: 600, mb: 1, color: 'text.primary' }}>
@@ -30,7 +22,7 @@ export function FairnessRadio({ value, onChange }) {
       </FormLabel>
       <RadioGroup
         value={value}
-        onChange={handleChange}
+        onChange={(e) => onChange(e.target.value)}
       >
         {options.map((opt) => (
           <FormControlLabel

@@ -5,7 +5,6 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import theme from './theme'
 import App from './App'
-import { EventStoreProvider } from './events'
 import './i18n'
 import './styles/custom.css'
 
@@ -14,9 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <HashRouter>
-        <EventStoreProvider>
-          <App />
-        </EventStoreProvider>
+        <App />
       </HashRouter>
     </ThemeProvider>
   </React.StrictMode>
