@@ -1,5 +1,5 @@
-export const REPAYS = 'repays'
-export const DEFAULTS = 'defaults'
+export const SUITABLE = 'suitable'
+export const UNSUITABLE = 'unsuitable'
 
 /**
  * Counts the four confusion-matrix cells and derives the four teaching metrics.
@@ -15,10 +15,10 @@ export function calculateMetrics(data, group = null, threshold = 50) {
 
   for (const row of rows) {
     const predictedPositive = row.score >= threshold
-    if (row.outcome === REPAYS) {
+    if (row.outcome === SUITABLE) {
       if (predictedPositive) tp += 1
       else fn += 1
-    } else if (row.outcome === DEFAULTS) {
+    } else if (row.outcome === UNSUITABLE) {
       if (predictedPositive) fp += 1
       else tn += 1
     }
@@ -39,7 +39,7 @@ export function calculateMetrics(data, group = null, threshold = 50) {
     accuracy: percent(tp + tn, total),
     positiveRate: percent(tp + fp, total),
     truePositiveRate: percent(tp, tp + fn),
-    profit: 300 * tp - 700 * fp,
+    netValue: 300 * tp - 700 * fp,
   }
 }
 
@@ -71,13 +71,13 @@ export function findThresholdForMetric(
       (diff === best.diff && distance < best.distance) ||
       (diff === best.diff && distance === best.distance && threshold > best.threshold)
     ) {
-      best = { threshold, value, diff, distance, exact: diff === 0 }
+      best = { threshold, metricValue: value, diff, distance, exact: diff === 0 }
     }
   }
 
   if (best === null) {
-    return { threshold: reference ?? min, exact: false, value: null }
+    return { threshold: reference ?? min, exact: false, metricValue: null }
   }
 
-  return { threshold: best.threshold, exact: best.exact, value: best.value }
+  return { threshold: best.threshold, exact: best.exact, metricValue: best.metricValue }
 }

@@ -44,8 +44,8 @@ export default function TwoPopulations() {
     )
   }
 
-  const repaysLabel = getOutcomeLabel('repays', lang)
-  const notRepaysLabel = getOutcomeLabel('defaults', lang)
+  const suitableLabel = getOutcomeLabel('suitable', lang)
+  const unsuitableLabel = getOutcomeLabel('unsuitable', lang)
 
   return (
     <Box>
@@ -70,7 +70,11 @@ export default function TwoPopulations() {
       <Typography variant="subtitle2" component="p" sx={{ mt: 3, mb: 0 }}>
         {t('twoPopulations.allPeople')}
       </Typography>
-      <DotPlot data={displayData} colorScheme="Paired" />
+      <DotPlot
+        data={displayData}
+        colorDomain={[suitableLabel, unsuitableLabel]}
+        colorRange={['#1f78b4', '#a6cee3']}
+      />
 
       <Typography variant="body1" paragraph>
         {t('twoPopulations.intro3')}
@@ -99,7 +103,7 @@ export default function TwoPopulations() {
               data={pinkvilleData}
               height={200}
               fontSize={13}
-              colorDomain={[repaysLabel, notRepaysLabel]}
+              colorDomain={[suitableLabel, unsuitableLabel]}
               colorRange={['#6a3d9a', '#cab2d6']}
               yDomain={[0, 10]}
               marginLeft={40}
@@ -119,7 +123,7 @@ export default function TwoPopulations() {
               data={greenfieldData}
               height={200}
               fontSize={13}
-              colorDomain={[repaysLabel, notRepaysLabel]}
+              colorDomain={[suitableLabel, unsuitableLabel]}
               colorRange={['#33a02c', '#b2df8a']}
               yDomain={[0, 10]}
               marginLeft={40}

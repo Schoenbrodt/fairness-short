@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { formatCurrency, formatPercent } from '../utils/format'
 
-export function MetricsTable({ accuracy, positiveRate, truePositiveRate, profit }) {
+export function MetricsTable({ accuracy, positiveRate, truePositiveRate, netValue }) {
   const { t, i18n } = useTranslation()
   const lang = i18n.resolvedLanguage
 
@@ -20,7 +20,7 @@ export function MetricsTable({ accuracy, positiveRate, truePositiveRate, profit 
             <TableCell align="center">{t('common.accuracy')}</TableCell>
             <TableCell align="center">{t('common.positiveRate')}</TableCell>
             <TableCell align="center">{t('common.truePositiveRate')}</TableCell>
-            <TableCell align="center">{t('common.profit')}</TableCell>
+            <TableCell align="center">{t('common.value')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -28,7 +28,7 @@ export function MetricsTable({ accuracy, positiveRate, truePositiveRate, profit 
             <TableCell align="center">{formatPercent(accuracy, lang)}</TableCell>
             <TableCell align="center">{formatPercent(positiveRate, lang)}</TableCell>
             <TableCell align="center">{formatPercent(truePositiveRate, lang)}</TableCell>
-            <TableCell align="center">{formatCurrency(profit, lang)}</TableCell>
+            <TableCell align="center">{formatCurrency(netValue, lang)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

@@ -25,13 +25,13 @@ export function ConfusionMatrix({ tp, fp, fn, tn, showSums = true }) {
             <TableCell
               align="center"
               dangerouslySetInnerHTML={{
-                __html: t('common.predictionRepays').replace(': ', ':<br/>'),
+                __html: t('common.predictionOffer').replace(': ', ':<br/>'),
               }}
             />
             <TableCell
               align="center"
               dangerouslySetInnerHTML={{
-                __html: t('common.predictionNotRepays').replace(': ', ':<br/>'),
+                __html: t('common.predictionNoOffer').replace(': ', ':<br/>'),
               }}
             />
             {showSums && <TableCell align="center">{t('common.sum')}</TableCell>}
@@ -43,7 +43,7 @@ export function ConfusionMatrix({ tp, fp, fn, tn, showSums = true }) {
               component="th"
               sx={{ fontWeight: 600, bgcolor: '#F5F7F8' }}
               dangerouslySetInnerHTML={{
-                __html: t('common.dataRepays').replace(': ', ':<br/>'),
+                __html: t('common.dataSuitable').replace(': ', ':<br/>'),
               }}
             />
             <TableCell align="center" sx={correctCellSx}>{tp}</TableCell>
@@ -57,7 +57,7 @@ export function ConfusionMatrix({ tp, fp, fn, tn, showSums = true }) {
               component="th"
               sx={{ fontWeight: 600, bgcolor: '#F5F7F8' }}
               dangerouslySetInnerHTML={{
-                __html: t('common.dataNotRepays').replace(': ', ':<br/>'),
+                __html: t('common.dataUnsuitable').replace(': ', ':<br/>'),
               }}
             />
             <TableCell align="center">{fp}</TableCell>

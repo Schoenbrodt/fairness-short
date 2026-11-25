@@ -121,6 +121,10 @@ export default function About() {
         </Box>
       </Paper>
 
+      <Typography variant="body2" color="text.secondary" paragraph>
+        {t('about.adaptationNote')}
+      </Typography>
+
       <Typography variant="h5" gutterBottom>
         {t('about.goalTitle')}
       </Typography>

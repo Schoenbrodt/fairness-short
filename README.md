@@ -1,8 +1,11 @@
-# Fairness in der Kreditvergabe — Kurzfassung
+# Fairness in der Personalauswahl — Kurzfassung
 
-Standalone short version of the fairness activity: the two population groups and the fair
-decision thresholds. It is based on the larger `fairness-main` app, but keeps only the two
-interactive parts needed for a public, self-guided session.
+Standalone short version of the fairness activity, adapted to automated hiring: two applicant
+groups and fair hiring thresholds. It is based on the larger `fairness-main` app, but keeps only
+the two interactive parts needed for a public, self-guided session.
+
+The underlying study examines fairness in credit scoring; this short version adapts the idea to
+hiring. The €300/€700 model is a didactic simplification.
 
 ## Development
 
@@ -20,9 +23,9 @@ npm run preview   # http://localhost:4174/
 
 | Route | Content |
 | --- | --- |
-| `/#/de` / `/#/en` | Landing: credit scoring and the 300 €/700 € rule |
-| `/#/de/groups` / `/#/en/groups` | Two population groups |
-| `/#/de/thresholds` / `/#/en/thresholds` | Fair decision thresholds |
+| `/#/de` / `/#/en` | Landing: automated hiring and the 300 €/700 € value model |
+| `/#/de/groups` / `/#/en/groups` | Two applicant groups |
+| `/#/de/thresholds` / `/#/en/thresholds` | Fair hiring thresholds |
 | `/#/de/about` / `/#/en/about` | Article, authors, licence, funding |
 
 The language comes from the URL. It is remembered in `localStorage` under `fairness.lang`.
@@ -56,7 +59,7 @@ public/
 
 `public/data/distribution.csv` is loaded at runtime. Its schema is canonical:
 `score,group,outcome` with `group ∈ {pinkville, greenfield}` and
-`outcome ∈ {repays, defaults}`. The language choice and notes are the only things stored, and
+`outcome ∈ {suitable, unsuitable}`. The language choice and notes are the only things stored, and
 only in `localStorage`. There is no backend, no tracking and no external font or analytics
 request.
 

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const cards = [
-  { title: 'intro.profitTitle', text: 'intro.profitText' },
+  { title: 'intro.valueTitle', text: 'intro.valueText' },
   { title: 'intro.scoreTitle', text: 'intro.scoreText' },
   { title: 'intro.dataTitle', text: 'intro.dataText' },
 ]

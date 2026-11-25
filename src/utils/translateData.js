@@ -1,13 +1,13 @@
 const LABELS = {
   de: {
-    repays: 'Zahlt zurück',
-    defaults: 'Zahlt nicht zurück',
+    suitable: 'Geeignet',
+    unsuitable: 'Nicht geeignet',
     pinkville: 'Pinklandia',
     greenfield: 'Grünhausen',
   },
   en: {
-    repays: 'Repays',
-    defaults: 'Does not repay',
+    suitable: 'Suitable',
+    unsuitable: 'Not suitable',
     pinkville: 'Pinkville',
     greenfield: 'Greenfield',
   },

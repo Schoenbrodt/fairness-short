@@ -25,7 +25,7 @@ const metricDefinitions = [
   'measures.defAccuracy',
   'measures.defPositiveRate',
   'measures.defTruePositiveRate',
-  'measures.defProfit',
+  'measures.defValue',
 ]
 
 export default function FairThresholds() {
@@ -101,9 +101,9 @@ export default function FairThresholds() {
 
   const pinkvilleDisplay = displayData.filter((d) => d.group === 'pinkville')
   const greenfieldDisplay = displayData.filter((d) => d.group === 'greenfield')
-  const notRepaysLabel = getOutcomeLabel('defaults', lang)
-  const repaysLabel = getOutcomeLabel('repays', lang)
-  const totalProfit = metricsPink.profit + metricsGreen.profit
+  const unsuitableLabel = getOutcomeLabel('unsuitable', lang)
+  const suitableLabel = getOutcomeLabel('suitable', lang)
+  const totalNetValue = metricsPink.netValue + metricsGreen.netValue
   const isLinked = strategy !== 'independent'
   const showApproximation =
     (strategy === 'samePositiveRates' || strategy === 'sameTruePositiveRates') && !greenLink.exact
@@ -185,7 +185,7 @@ export default function FairThresholds() {
               variant="h6"
               sx={{ ml: { sm: 'auto' }, fontWeight: 700, textAlign: { xs: 'left', sm: 'right' } }}
             >
-              {t('fairThresholds.totalProfit', { profit: formatCurrency(totalProfit, lang) })}
+              {t('fairThresholds.totalValue', { value: formatCurrency(totalNetValue, lang) })}
             </Typography>
           </Box>
         </CardContent>
@@ -212,7 +212,7 @@ export default function FairThresholds() {
               fontSize={13}
               xDomain={[10, 99]}
               yDomain={[0, 10]}
-              colorDomain={[notRepaysLabel, repaysLabel]}
+              colorDomain={[unsuitableLabel, suitableLabel]}
               colorRange={['#cab2d6', '#6a3d9a']}
               marginLeft={40}
             />
@@ -227,7 +227,7 @@ export default function FairThresholds() {
               accuracy={metricsPink.accuracy}
               positiveRate={metricsPink.positiveRate}
               truePositiveRate={metricsPink.truePositiveRate}
-              profit={metricsPink.profit}
+              netValue={metricsPink.netValue}
             />
           </CardContent>
         </Card>
@@ -251,7 +251,7 @@ export default function FairThresholds() {
               fontSize={13}
               xDomain={[10, 99]}
               yDomain={[0, 10]}
-              colorDomain={[notRepaysLabel, repaysLabel]}
+              colorDomain={[unsuitableLabel, suitableLabel]}
               colorRange={['#b2df8a', '#33a02c']}
               marginLeft={40}
             />
@@ -266,7 +266,7 @@ export default function FairThresholds() {
               accuracy={metricsGreen.accuracy}
               positiveRate={metricsGreen.positiveRate}
               truePositiveRate={metricsGreen.truePositiveRate}
-              profit={metricsGreen.profit}
+              netValue={metricsGreen.netValue}
             />
           </CardContent>
         </Card>
