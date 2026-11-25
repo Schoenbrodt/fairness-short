@@ -1,0 +1,73 @@
+/* ===== Observable Plot SVG overrides ===== */
+figure {
+  margin: 0;
+}
+
+/* Legend container — the swatches row above the chart */
+figure[class] > div:first-child,
+figure > div[style*="display"] {
+  margin-bottom: 6px;
+}
+
+/* Observable Plot legend swatches */
+[class*="plot"] span[class],
+figure span[style*="display: inline-flex"] {
+  margin-right: 14px !important;
+}
+
+/* Dot-plot container: ensure SVG scales cleanly */
+.dot-plot-container svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Axis tick labels */
+.dot-plot-container text {
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Legend text */
+.dot-plot-container figcaption,
+.dot-plot-container [aria-label="color"] {
+  font-size: 13px;
+  padding: 2px 0 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  align-items: center;
+}
+
+/* Legend swatch circles/squares */
+.dot-plot-container [aria-label="color"] svg {
+  margin-right: 4px;
+}
+
+/* ===== Contenteditable cell tweaks ===== */
+td[contenteditable="true"] {
+  min-width: 60px;
+}
+
+td[contenteditable="true"]:focus {
+  outline: none;
+}
+
+/* ===== Ordered/unordered list spacing ===== */
+ol, ul {
+  margin-bottom: 12px;
+  padding-left: 24px;
+}
+
+ol li, ul li {
+  margin-bottom: 6px;
+}
+
+/* ===== Link styling ===== */
+a {
+  color: #5296a5;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
