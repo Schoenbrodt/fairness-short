@@ -90,7 +90,7 @@ export function DotPlot({
       marginLeft,
       style: {
         fontSize: `${fontSize}px`,
-        fontFamily: '"Roboto", "Helvetica Neue", Arial, sans-serif',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
         background: 'transparent',
       },
       x: {

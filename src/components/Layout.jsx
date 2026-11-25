@@ -39,6 +39,7 @@ export function Layout() {
   }
 
   const isAboutPage = location.pathname === `/${lang}/about`
+  const isWidePage = location.pathname === `/${lang}/thresholds`
 
   const currentIndex = steps.findIndex((step) => {
     const full = `/${lang}${step.path}`
@@ -76,6 +77,7 @@ export function Layout() {
     >
       {/* Top bar: title, about, language */}
       <Box
+        className="no-print"
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -129,7 +131,10 @@ export function Layout() {
 
       {/* Three-step path (hidden on the About page) */}
       {!isAboutPage && (
-        <Box sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper' }}>
+        <Box
+          className="no-print"
+          sx={{ borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'background.paper' }}
+        >
           <StepNav lang={lang} />
         </Box>
       )}
@@ -150,7 +155,7 @@ export function Layout() {
           key={i18n.resolvedLanguage}
           sx={{
             width: '100%',
-            maxWidth: 800,
+            maxWidth: isWidePage ? 1200 : 800,
           }}
         >
           <Outlet />
@@ -160,6 +165,7 @@ export function Layout() {
             <>
               <Divider sx={{ mt: 5, mb: 3 }} />
               <Box
+                className="no-print"
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',

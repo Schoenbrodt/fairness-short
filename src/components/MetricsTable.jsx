@@ -6,9 +6,11 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { formatCurrency, formatPercent } from '../utils/format'
 
 export function MetricsTable({ accuracy, positiveRate, truePositiveRate, profit }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lang = i18n.resolvedLanguage
 
   return (
     <TableContainer component={Paper} variant="outlined" sx={{ my: 2 }}>
@@ -23,10 +25,10 @@ export function MetricsTable({ accuracy, positiveRate, truePositiveRate, profit 
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell align="center">{accuracy}%</TableCell>
-            <TableCell align="center">{positiveRate}%</TableCell>
-            <TableCell align="center">{truePositiveRate}%</TableCell>
-            <TableCell align="center">{profit}€</TableCell>
+            <TableCell align="center">{formatPercent(accuracy, lang)}</TableCell>
+            <TableCell align="center">{formatPercent(positiveRate, lang)}</TableCell>
+            <TableCell align="center">{formatPercent(truePositiveRate, lang)}</TableCell>
+            <TableCell align="center">{formatCurrency(profit, lang)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

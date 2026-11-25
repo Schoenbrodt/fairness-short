@@ -4,15 +4,21 @@ import EditIcon from '@mui/icons-material/Edit'
 import ForumIcon from '@mui/icons-material/Forum'
 
 const iconMap = {
-  'pencil-alt': <EditIcon fontSize="small" sx={{ mr: 0.5 }} />,
-  'comments': <ForumIcon fontSize="small" sx={{ mr: 0.5 }} />,
+  'pencil-alt': <EditIcon fontSize="small" />,
+  'comments': <ForumIcon fontSize="small" />,
 }
 
 export function TaskBox({ label, children, icon = null }) {
   return (
-    <Alert severity="info" icon={false} sx={{ my: 2.5 }}>
-      <AlertTitle>{label}</AlertTitle>
-      {icon && iconMap[icon]}
+    <Alert
+      severity="info"
+      icon={false}
+      sx={{ my: 2.5, '& .MuiAlert-message': { width: '100%' } }}
+    >
+      <AlertTitle sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+        {icon && iconMap[icon]}
+        {label}
+      </AlertTitle>
       {children}
     </Alert>
   )

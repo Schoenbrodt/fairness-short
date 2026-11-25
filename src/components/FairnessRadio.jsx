@@ -5,7 +5,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 
-export function FairnessRadio({ value, onChange }) {
+export function FairnessRadio({ value, onChange, label }) {
   const { t } = useTranslation()
 
   const options = [
@@ -18,11 +18,12 @@ export function FairnessRadio({ value, onChange }) {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend" sx={{ fontWeight: 600, mb: 1, color: 'text.primary' }}>
-        {t('fairThresholds.sliderLabel')}
+        {label ?? t('fairThresholds.strategyTitle')}
       </FormLabel>
       <RadioGroup
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 0.5 }}
       >
         {options.map((opt) => (
           <FormControlLabel

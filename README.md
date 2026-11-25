@@ -27,15 +27,23 @@ npm run preview   # http://localhost:4174/
 The language comes from the URL. It is remembered in `localStorage` under `fairness.lang`.
 `<html lang>` and the document title follow the active language.
 
+## Notes and printing
+
+Each task on the groups and thresholds pages has a short notes field. Notes are stored locally
+under `fairness.notes.*`; nothing is sent to a server. The task section has **Drucken / PDF**
+(uses the browser print dialog) and **Notizen löschen** (removes all notes on this device). In
+print mode the header, navigation and note inputs are hidden and the notes are printed with the
+current charts and metrics.
+
 ## Structure
 
 ```
 src/
-├── components/     # DotPlot, ConfusionMatrix, MetricsTable, sliders, task boxes, layout
+├── components/     # DotPlot, ConfusionMatrix, MetricsTable, Notes, sliders, task boxes, layout
 ├── locales/        # de.json, en.json
 ├── pages/          # Introduction, TwoPopulations, FairThresholds, About
-├── utils/          # CSV loading, display labels, metrics
-├── styles/         # small global overrides
+├── utils/          # CSV loading, display labels, metrics, number formatting
+├── styles/         # global overrides and print styles
 ├── App.jsx         # routes
 ├── i18n.js         # i18next setup
 ├── lang.js         # URL/storage language helpers
@@ -45,7 +53,9 @@ public/
 └── article-thumbnail.png
 ```
 
-`public/data/distribution.csv` is loaded at runtime. There is no backend and no tracking.
+`public/data/distribution.csv` is loaded at runtime. The language choice and notes are the only
+things stored, and only in `localStorage`. There is no backend, no tracking and no external font
+or analytics request.
 
 ## Deployment
 

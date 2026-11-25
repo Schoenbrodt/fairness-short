@@ -24,7 +24,7 @@ figure span[style*="display: inline-flex"] {
 
 /* Axis tick labels */
 .dot-plot-container text {
-  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Legend text */
@@ -70,4 +70,44 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* ===== Notes and printing ===== */
+.notes-print {
+  display: none;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .notes-input {
+    display: none !important;
+  }
+
+  .notes-print {
+    display: block !important;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-left: 3px solid #a57548;
+    background: #fdf3e7;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  main {
+    max-width: none !important;
+  }
+
+  .MuiPaper-root {
+    box-shadow: none !important;
+  }
+
+  .MuiAlert-root,
+  .MuiCard-root {
+    break-inside: avoid;
+  }
 }
