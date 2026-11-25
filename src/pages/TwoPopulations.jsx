@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import { loadCsv } from '../utils/loadData'
-import { getDisplayData } from '../utils/translateData'
+import { getDisplayData, getOutcomeLabel } from '../utils/translateData'
 import { DotPlot } from '../components/DotPlot'
 import { Notes, NotesActions } from '../components/Notes'
 import { TaskBox } from '../components/TaskBox'
@@ -27,13 +27,13 @@ export default function TwoPopulations() {
   )
 
   const pinkvilleData = useMemo(
-    () => (displayData ? displayData.filter((d) => d.age === (lang === 'de' ? 'Alt' : 'Old')) : null),
-    [displayData, lang]
+    () => (displayData ? displayData.filter((d) => d.group === 'pinkville') : null),
+    [displayData]
   )
 
   const greenfieldData = useMemo(
-    () => (displayData ? displayData.filter((d) => d.age === (lang === 'de' ? 'Jung' : 'Young')) : null),
-    [displayData, lang]
+    () => (displayData ? displayData.filter((d) => d.group === 'greenfield') : null),
+    [displayData]
   )
 
   if (!displayData) {
@@ -44,8 +44,8 @@ export default function TwoPopulations() {
     )
   }
 
-  const repaysLabel = lang === 'de' ? 'Zahlt zurück' : 'Repays'
-  const notRepaysLabel = lang === 'de' ? 'Zahlt nicht zurück' : 'Does not repay'
+  const repaysLabel = getOutcomeLabel('repays', lang)
+  const notRepaysLabel = getOutcomeLabel('defaults', lang)
 
   return (
     <Box>

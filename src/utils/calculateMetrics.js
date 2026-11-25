@@ -1,76 +1,83 @@
-export function calculateMetrics(data, ageGroup, threshold) {
-  let filteredData = data
-  if (ageGroup !== '') {
-    filteredData = data.filter((d) => d.age === ageGroup)
+export const REPAYS = 'repays'
+export const DEFAULTS = 'defaults'
+
+/**
+ * Counts the four confusion-matrix cells and derives the four teaching metrics.
+ * `group` is a canonical group key (`pinkville` / `greenfield`) or `null` for all rows.
+ */
+export function calculateMetrics(data, group = null, threshold = 50) {
+  const rows = group ? data.filter((row) => row.group === group) : data
+
+  let tp = 0
+  let fp = 0
+  let fn = 0
+  let tn = 0
+
+  for (const row of rows) {
+    const predictedPositive = row.score >= threshold
+    if (row.outcome === REPAYS) {
+      if (predictedPositive) tp += 1
+      else fn += 1
+    } else if (row.outcome === DEFAULTS) {
+      if (predictedPositive) fp += 1
+      else tn += 1
+    }
   }
 
-  const grp = filteredData.reduce((acc, item) => {
-    const type = item.type
-    const score = item.score
-    if (!acc[type]) {
-      acc[type] = { belowthreshold: 0, abovethreshold: 0 }
-    }
-    if (score < threshold) {
-      acc[type].belowthreshold += 1
-    } else {
-      acc[type].abovethreshold += 1
-    }
-    return acc
-  }, {})
-
-  const repaysKey = 'Zahlt zurück'
-  const notRepaysKey = 'Zahlt nicht zurück'
-
-  const n_true_positive = (grp[repaysKey] && grp[repaysKey].abovethreshold) || 0
-  const n_false_positive = (grp[notRepaysKey] && grp[notRepaysKey].abovethreshold) || 0
-  const n_false_negative = (grp[repaysKey] && grp[repaysKey].belowthreshold) || 0
-  const n_true_negative = (grp[notRepaysKey] && grp[notRepaysKey].belowthreshold) || 0
-
-  const total = n_true_positive + n_false_positive + n_false_negative + n_true_negative
-
-  const eps = 1e-9
-  const precision = Math.round(
-    ((n_true_positive + eps) / (n_true_positive + n_false_positive + eps)) * 100
-  )
-  const recall = Math.round(
-    (n_true_positive / (n_true_positive + n_false_negative + eps)) * 100
-  )
-  const accuracy = Math.round(
-    ((n_true_positive + n_true_negative) / (total + eps)) * 100
-  )
-  const positive_rate = Math.round(
-    ((n_true_positive + n_false_positive) / (total + eps)) * 100
-  )
-  const true_positive_rate = recall
-  const gewinn = 300 * n_true_positive - 700 * n_false_positive
+  const total = tp + fp + fn + tn
+  // The tiny epsilon keeps half-percentages at the lower integer. The learning material
+  // uses these values (e.g. 54.5 % is shown as 54 %), so keep the existing display stable.
+  const percent = (numerator, denominator) =>
+    Math.round((numerator / (denominator + 1e-9)) * 100)
 
   return {
-    grp,
-    n_true_positive,
-    n_false_positive,
-    n_false_negative,
-    n_true_negative,
+    tp,
+    fp,
+    fn,
+    tn,
     total,
-    precision,
-    recall,
-    positive_rate,
-    true_positive_rate,
-    gewinn,
-    accuracy,
+    accuracy: percent(tp + tn, total),
+    positiveRate: percent(tp + fp, total),
+    truePositiveRate: percent(tp, tp + fn),
+    profit: 300 * tp - 700 * fp,
   }
 }
 
-export function findThresholdForMetric(data, ageGroup, targetMetric, targetValue) {
-  let bestThreshold = 0
-  let minDiff = Infinity
+/**
+ * Finds the threshold in [min, max] whose `metric` is closest to `target`.
+ *
+ * Ties are broken by the distance to `reference` (usually the other group's threshold),
+ * then by the higher threshold. `exact` says whether the rounded metric equals the target.
+ */
+export function findThresholdForMetric(
+  data,
+  group,
+  metric,
+  target,
+  { min = 10, max = 100, reference = null } = {}
+) {
+  let best = null
 
-  for (let t = 0; t <= 100; t++) {
-    const metrics = calculateMetrics(data, ageGroup, t)
-    const diff = Math.abs(metrics[targetMetric] - targetValue)
-    if (diff < minDiff) {
-      minDiff = diff
-      bestThreshold = t
+  for (let threshold = min; threshold <= max; threshold += 1) {
+    const value = calculateMetrics(data, group, threshold)[metric]
+    if (typeof value !== 'number') continue
+
+    const diff = Math.abs(value - target)
+    const distance = reference == null ? 0 : Math.abs(threshold - reference)
+
+    if (
+      best === null ||
+      diff < best.diff ||
+      (diff === best.diff && distance < best.distance) ||
+      (diff === best.diff && distance === best.distance && threshold > best.threshold)
+    ) {
+      best = { threshold, value, diff, distance, exact: diff === 0 }
     }
   }
-  return bestThreshold
+
+  if (best === null) {
+    return { threshold: reference ?? min, exact: false, value: null }
+  }
+
+  return { threshold: best.threshold, exact: best.exact, value: best.value }
 }

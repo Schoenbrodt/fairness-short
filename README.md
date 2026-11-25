@@ -11,6 +11,7 @@ Node 22 or newer. The dev server runs on **5174** so it can coexist with the CAM
 ```bash
 npm ci
 npm run dev       # http://localhost:5174/
+npm test          # node --test (dataset, metrics, threshold search, formatting)
 npm run build     # dist/
 npm run preview   # http://localhost:4174/
 ```
@@ -53,9 +54,11 @@ public/
 └── article-thumbnail.png
 ```
 
-`public/data/distribution.csv` is loaded at runtime. The language choice and notes are the only
-things stored, and only in `localStorage`. There is no backend, no tracking and no external font
-or analytics request.
+`public/data/distribution.csv` is loaded at runtime. Its schema is canonical:
+`score,group,outcome` with `group ∈ {pinkville, greenfield}` and
+`outcome ∈ {repays, defaults}`. The language choice and notes are the only things stored, and
+only in `localStorage`. There is no backend, no tracking and no external font or analytics
+request.
 
 ## Deployment
 

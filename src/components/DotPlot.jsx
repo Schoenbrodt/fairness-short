@@ -15,7 +15,7 @@ export function DotPlot({
   colorScheme = null,
   colorDomain = null,
   colorRange = null,
-  fillField = 'type',
+  fillField = 'outcomeLabel',
   showLegend = true,
   marginTop: marginTopProp,
   marginRight = 20,

@@ -1,29 +1,38 @@
-const translations = {
-  en: {
-    'Zahlt zurück': 'Repays',
-    'Zahlt nicht zurück': 'Does not repay',
-    Jung: 'Young',
-    Alt: 'Old',
-  },
+const LABELS = {
   de: {
-    'Zahlt zurück': 'Zahlt zurück',
-    'Zahlt nicht zurück': 'Zahlt nicht zurück',
-    Jung: 'Jung',
-    Alt: 'Alt',
+    repays: 'Zahlt zurück',
+    defaults: 'Zahlt nicht zurück',
+    pinkville: 'Pinklandia',
+    greenfield: 'Grünhausen',
+  },
+  en: {
+    repays: 'Repays',
+    defaults: 'Does not repay',
+    pinkville: 'Pinkville',
+    greenfield: 'Greenfield',
   },
 }
 
-export function getTypeLabel(germanLabel, lang) {
-  const map = translations[lang] || translations.de
-  return map[germanLabel] || germanLabel
+function labelsFor(lang) {
+  return LABELS[lang] ?? LABELS.de
 }
 
+export function getOutcomeLabel(outcome, lang) {
+  return labelsFor(lang)[outcome] ?? outcome
+}
+
+export function getGroupLabel(group, lang) {
+  return labelsFor(lang)[group] ?? group
+}
+
+/**
+ * Adds display labels without changing the canonical `group` / `outcome` keys used by
+ * the metrics. Only the charts use the labels.
+ */
 export function getDisplayData(data, lang) {
-  if (lang === 'de') return data
-  const map = translations.en
-  return data.map((d) => ({
-    ...d,
-    type: map[d.type] || d.type,
-    age: map[d.age] || d.age,
+  return data.map((row) => ({
+    ...row,
+    groupLabel: getGroupLabel(row.group, lang),
+    outcomeLabel: getOutcomeLabel(row.outcome, lang),
   }))
 }

@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { loadCsv } from '../utils/loadData'
-import { getDisplayData } from '../utils/translateData'
+import { getDisplayData, getOutcomeLabel } from '../utils/translateData'
 import { calculateMetrics, findThresholdForMetric } from '../utils/calculateMetrics'
 import { formatCurrency } from '../utils/format'
 import { DotPlot } from '../components/DotPlot'
@@ -47,24 +47,38 @@ export default function FairThresholds() {
 
   const metricsPink = useMemo(() => {
     if (!rawData) return null
-    return calculateMetrics(rawData, 'Alt', thresholdPink)
+    return calculateMetrics(rawData, 'pinkville', thresholdPink)
   }, [rawData, thresholdPink])
 
-  const thresholdGreen = useMemo(() => {
-    if (!rawData || !metricsPink) return thresholdGreenManual
-    if (strategy === 'sameThresholds') return thresholdPink
+  const greenLink = useMemo(() => {
+    if (!rawData || !metricsPink) return { threshold: thresholdGreenManual, exact: true }
+    if (strategy === 'sameThresholds') return { threshold: thresholdPink, exact: true }
     if (strategy === 'sameTruePositiveRates') {
-      return findThresholdForMetric(rawData, 'Jung', 'true_positive_rate', metricsPink.true_positive_rate)
+      return findThresholdForMetric(
+        rawData,
+        'greenfield',
+        'truePositiveRate',
+        metricsPink.truePositiveRate,
+        { reference: thresholdPink }
+      )
     }
     if (strategy === 'samePositiveRates') {
-      return findThresholdForMetric(rawData, 'Jung', 'positive_rate', metricsPink.positive_rate)
+      return findThresholdForMetric(
+        rawData,
+        'greenfield',
+        'positiveRate',
+        metricsPink.positiveRate,
+        { reference: thresholdPink }
+      )
     }
-    return thresholdGreenManual
+    return { threshold: thresholdGreenManual, exact: true }
   }, [rawData, metricsPink, strategy, thresholdPink, thresholdGreenManual])
+
+  const thresholdGreen = greenLink.threshold
 
   const metricsGreen = useMemo(() => {
     if (!rawData) return null
-    return calculateMetrics(rawData, 'Jung', thresholdGreen)
+    return calculateMetrics(rawData, 'greenfield', thresholdGreen)
   }, [rawData, thresholdGreen])
 
   const handleGreenChange = (val) => {
@@ -85,13 +99,14 @@ export default function FairThresholds() {
     )
   }
 
-  const pinkvilleDisplay = displayData.filter((d) => d.age === (lang === 'de' ? 'Alt' : 'Old'))
-  const greenfieldDisplay = displayData.filter((d) => d.age === (lang === 'de' ? 'Jung' : 'Young'))
-  const notRepaysLabel = lang === 'de' ? 'Zahlt nicht zurück' : 'Does not repay'
-  const repaysLabel = lang === 'de' ? 'Zahlt zurück' : 'Repays'
-  const totalProfit = metricsPink.gewinn + metricsGreen.gewinn
+  const pinkvilleDisplay = displayData.filter((d) => d.group === 'pinkville')
+  const greenfieldDisplay = displayData.filter((d) => d.group === 'greenfield')
+  const notRepaysLabel = getOutcomeLabel('defaults', lang)
+  const repaysLabel = getOutcomeLabel('repays', lang)
+  const totalProfit = metricsPink.profit + metricsGreen.profit
   const isLinked = strategy !== 'independent'
-  const showApproximation = strategy === 'samePositiveRates' || strategy === 'sameTruePositiveRates'
+  const showApproximation =
+    (strategy === 'samePositiveRates' || strategy === 'sameTruePositiveRates') && !greenLink.exact
 
   return (
     <Box>
@@ -202,17 +217,17 @@ export default function FairThresholds() {
               marginLeft={40}
             />
             <ConfusionMatrix
-              tp={metricsPink.n_true_positive}
-              fp={metricsPink.n_false_positive}
-              fn={metricsPink.n_false_negative}
-              tn={metricsPink.n_true_negative}
+              tp={metricsPink.tp}
+              fp={metricsPink.fp}
+              fn={metricsPink.fn}
+              tn={metricsPink.tn}
               showSums={false}
             />
             <MetricsTable
               accuracy={metricsPink.accuracy}
-              positiveRate={metricsPink.positive_rate}
-              truePositiveRate={metricsPink.true_positive_rate}
-              profit={metricsPink.gewinn}
+              positiveRate={metricsPink.positiveRate}
+              truePositiveRate={metricsPink.truePositiveRate}
+              profit={metricsPink.profit}
             />
           </CardContent>
         </Card>
@@ -241,17 +256,17 @@ export default function FairThresholds() {
               marginLeft={40}
             />
             <ConfusionMatrix
-              tp={metricsGreen.n_true_positive}
-              fp={metricsGreen.n_false_positive}
-              fn={metricsGreen.n_false_negative}
-              tn={metricsGreen.n_true_negative}
+              tp={metricsGreen.tp}
+              fp={metricsGreen.fp}
+              fn={metricsGreen.fn}
+              tn={metricsGreen.tn}
               showSums={false}
             />
             <MetricsTable
               accuracy={metricsGreen.accuracy}
-              positiveRate={metricsGreen.positive_rate}
-              truePositiveRate={metricsGreen.true_positive_rate}
-              profit={metricsGreen.gewinn}
+              positiveRate={metricsGreen.positiveRate}
+              truePositiveRate={metricsGreen.truePositiveRate}
+              profit={metricsGreen.profit}
             />
           </CardContent>
         </Card>
