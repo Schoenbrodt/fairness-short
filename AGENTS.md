@@ -5,9 +5,13 @@
 This is the standalone, public short version of the fairness learning activity, adapted to
 automated hiring. It keeps only the two interactive chapters of the larger app:
 
-1. **Two applicant groups** — the suitability-score distributions of Pinkville and Greenfield.
+1. **Two applicant groups** — the suitability-score distributions of female (`greenfield`) and
+   male (`pinkville`) applicants. The UI labels them “Weiblich” / “Männlich” (English “Female” /
+   “Male”); the town names are gone. Men are the favoured group: their scores are higher on
+   average, reflecting biased past hiring decisions.
 2. **Fair hiring thresholds** — two sliders, three linking strategies, invitation rate, hit rate,
-   unsuitable invitations. Accuracy and the confusion matrices are optional details.
+   accuracy and unsuitable invitations on each group card. Below the cards, an icon array shows
+   one figure per application; the confusion matrices remain optional details in an accordion.
 
 The underlying teaching activity is about credit scoring; this app uses a hiring story. The
 threshold decides who is **invited to an interview**, not who is hired. The short version
@@ -50,6 +54,14 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 - `src/pages/` — one page per route.
 - `src/components/DotPlot.jsx` — Observable Plot wrapper. It owns the `ResizeObserver`; do not
   move it back into a callback ref (React 18 ignores ref cleanup).
+- `src/components/IconArray.jsx` — one SVG with a `<symbol>` reused 200 times per group, so no
+  `ResizeObserver` is needed; the fixed `viewBox` scales with the container. Figures are grouped
+  into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no role. Class is
+  encoded without hue — filled = invited, outline = not invited, dark = suitable, light/grey =
+  unsuitable — so the array works in greyscale and for colour-vision deficiencies. Do not
+  reintroduce a red/green/amber class palette. Counts are printed as a legend below.
+- `src/utils/classify.js` — pure `classify`, `countClasses`, `sortByClass` for the icon array.
+  Keep it free of React and i18n; `countClasses` must stay equal to the confusion matrix.
 - `src/utils/calculateMetrics.js` — pure metrics. It takes the canonical `group` key and
   returns `tp`, `fp`, `fn`, `tn`, `total`, `accuracy`, `positiveRate` and `truePositiveRate`.
   Keep it free of React and i18n.
@@ -86,8 +98,9 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 
 `npm test` runs `node --test src/utils/*.test.js`. The suite covers the dataset shape (400 rows,
 200 per group, 100/100 outcomes), the confusion matrix at threshold 70, the group totals, empty groups, threshold search
-(exact/approximate, tie-breaks, range), and locale formatting. Add a test for any change to `calculateMetrics`, `findThresholdForMetric`, `translateData`
-or `format`.
+(exact/approximate, tie-breaks, range), icon-array classification and ordering, and locale
+formatting. Add a test for any change to `calculateMetrics`, `findThresholdForMetric`,
+`translateData`, `classify` or `format`.
 
 ## Notes and sharing
 

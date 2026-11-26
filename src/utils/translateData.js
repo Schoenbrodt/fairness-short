@@ -2,14 +2,14 @@ const LABELS = {
   de: {
     suitable: 'Geeignet',
     unsuitable: 'Nicht geeignet',
-    pinkville: 'Pinklandia',
-    greenfield: 'Grünhausen',
+    pinkville: 'Männlich',
+    greenfield: 'Weiblich',
   },
   en: {
     suitable: 'Suitable',
     unsuitable: 'Not suitable',
-    pinkville: 'Pinkville',
-    greenfield: 'Greenfield',
+    pinkville: 'Male',
+    greenfield: 'Female',
   },
 }
 

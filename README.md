@@ -15,7 +15,7 @@ Node 22 or newer. The dev server runs on **5174** so it can coexist with the CAM
 ```bash
 npm ci
 npm run dev       # http://localhost:5174/
-npm test          # node --test (dataset, metrics, threshold search, formatting)
+npm test          # node --test (dataset, metrics, threshold search, icon array, formatting)
 npm run build     # dist/
 npm run preview   # http://localhost:4174/
 ```
@@ -39,6 +39,14 @@ unsuitable invitations** (`fp`, „Fehleinladungen“), i.e. applications above 
 ground truth is “unsuitable”. Those counts are the quality brake: without them, inviting everyone
 would look perfectly fair — a 100 % invitation rate for both groups is not a good outcome.
 
+## Icon array
+
+Below the two group cards, each application is drawn as a small figure (20 × 10 grid per group).
+Figures are grouped into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no
+role. Class is encoded without hue: filled = invited, outline = not invited; dark = suitable,
+light or grey = unsuitable (so it works in greyscale and for colour-vision deficiencies). A
+legend below each array lists the four counts. The arrays update live with the sliders.
+
 ## Notes and printing
 
 Each task on the groups and thresholds pages has a short notes field. Notes are stored locally
@@ -51,10 +59,10 @@ current charts and metrics.
 
 ```
 src/
-├── components/     # DotPlot, ConfusionMatrix, Notes, sliders, task boxes, layout
+├── components/     # DotPlot, IconArray, ConfusionMatrix, Notes, sliders, task boxes, layout
 ├── locales/        # de.json, en.json
 ├── pages/          # Introduction, TwoPopulations, FairThresholds, About
-├── utils/          # CSV loading, display labels, metrics, threshold search, formatting
+├── utils/          # CSV loading, display labels, metrics, classification, threshold search, formatting
 ├── styles/         # global overrides and print styles
 ├── App.jsx         # routes
 ├── i18n.js         # i18next setup

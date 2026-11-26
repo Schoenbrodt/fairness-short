@@ -19,6 +19,7 @@ import { formatPercent } from '../utils/format'
 import { DotPlot } from '../components/DotPlot'
 import { ConfusionMatrix } from '../components/ConfusionMatrix'
 import { FairnessRadio } from '../components/FairnessRadio'
+import { IconArray } from '../components/IconArray'
 import { Notes, NotesActions } from '../components/Notes'
 import { TaskBox } from '../components/TaskBox'
 import { ThresholdSlider } from '../components/ThresholdSlider'
@@ -26,31 +27,35 @@ import { ThresholdSlider } from '../components/ThresholdSlider'
 const metricDefinitions = [
   'measures.defPositiveRate',
   'measures.defTruePositiveRate',
+  'measures.defAccuracy',
   'measures.defFalseHires',
 ]
 
 function GroupMetrics({ metrics, lang }) {
   const { t } = useTranslation()
 
+  const items = [
+    { label: 'common.positiveRate', value: metrics.positiveRate },
+    { label: 'common.truePositiveRate', value: metrics.truePositiveRate },
+    { label: 'common.accuracy', value: metrics.accuracy },
+  ]
+
   return (
     <Box sx={{ my: 2 }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
-        <Box>
-          <Typography variant="caption" color="text.secondary">
-            {t('common.positiveRate')}
-          </Typography>
-          <Typography variant="h4" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
-            {formatPercent(metrics.positiveRate, lang)}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="caption" color="text.secondary">
-            {t('common.truePositiveRate')}
-          </Typography>
-          <Typography variant="h4" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
-            {formatPercent(metrics.truePositiveRate, lang)}
-          </Typography>
-        </Box>
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
+        {items.map((item) => (
+          <Box
+            key={item.label}
+            sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
+          >
+            <Typography variant="caption" color="text.secondary">
+              {t(item.label)}
+            </Typography>
+            <Typography variant="h5" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+              {formatPercent(item.value, lang)}
+            </Typography>
+          </Box>
+        ))}
       </Box>
       <Typography
         variant="body2"
@@ -217,6 +222,56 @@ export default function FairThresholds() {
         </Card>
       </Box>
 
+      <Typography variant="h5" sx={{ mt: 4 }} gutterBottom>
+        {t('iconArray.title')}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        {t('iconArray.hint')}
+      </Typography>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+          gap: 2.5,
+          mb: 2,
+        }}
+      >
+        {[
+          {
+            key: 'pinkville',
+            label: t('data.pinkville'),
+            color: '#6a3d9a',
+            paleColor: '#cab2d6',
+            threshold: thresholdPink,
+            rows: pinkvilleDisplay,
+          },
+          {
+            key: 'greenfield',
+            label: t('data.greenfield'),
+            color: '#33a02c',
+            paleColor: '#b2df8a',
+            threshold: thresholdGreen,
+            rows: greenfieldDisplay,
+          },
+        ].map((group) => (
+          <Paper key={group.key} variant="outlined" sx={{ p: 2 }}>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: group.color, fontWeight: 700, mb: 1.5 }}
+            >
+              {group.label}
+            </Typography>
+            <IconArray
+              rows={group.rows}
+              threshold={group.threshold}
+              color={group.color}
+              paleColor={group.paleColor}
+              groupLabel={group.label}
+            />
+          </Paper>
+        ))}
+      </Box>
+
       <Box
         sx={{
           display: 'grid',
@@ -236,7 +291,7 @@ export default function FairThresholds() {
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+              gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
               gap: 1.5,
             }}
           >
@@ -293,10 +348,7 @@ export default function FairThresholds() {
           >
             <Box>
               <Typography variant="subtitle2" sx={{ color: '#6a3d9a' }}>
-                {t('fairThresholds.thresholdPinkville')}
-              </Typography>
-              <Typography variant="body2">
-                {t('common.accuracy')}: {formatPercent(metricsPink.accuracy, lang)}
+                {t('data.pinkville')}
               </Typography>
               <ConfusionMatrix
                 tp={metricsPink.tp}
@@ -308,10 +360,7 @@ export default function FairThresholds() {
             </Box>
             <Box>
               <Typography variant="subtitle2" sx={{ color: '#33a02c' }}>
-                {t('fairThresholds.thresholdGreenfield')}
-              </Typography>
-              <Typography variant="body2">
-                {t('common.accuracy')}: {formatPercent(metricsGreen.accuracy, lang)}
+                {t('data.greenfield')}
               </Typography>
               <ConfusionMatrix
                 tp={metricsGreen.tp}
