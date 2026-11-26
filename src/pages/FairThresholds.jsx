@@ -16,6 +16,7 @@ import { loadCsv } from '../utils/loadData'
 import { getDisplayData, getOutcomeLabel } from '../utils/translateData'
 import { calculateMetrics, findThresholdForMetric } from '../utils/calculateMetrics'
 import { formatPercent } from '../utils/format'
+import { GROUP_COLORS, UNSUITABLE_COLOR } from '../palette'
 import { DotPlot } from '../components/DotPlot'
 import { ConfusionMatrix } from '../components/ConfusionMatrix'
 import { FairnessRadio } from '../components/FairnessRadio'
@@ -173,9 +174,13 @@ export default function FairThresholds() {
           my: 2,
         }}
       >
-        <Card sx={{ borderTop: '3px solid #6a3d9a', minWidth: 0 }}>
+        <Card sx={{ borderTop: `3px solid ${GROUP_COLORS.pinkville}`, minWidth: 0 }}>
           <CardContent>
-            <Typography variant="h6" gutterBottom sx={{ color: '#6a3d9a' }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: GROUP_COLORS.pinkville }}
+            >
               {t('fairThresholds.thresholdPinkville')}
             </Typography>
             <ThresholdSlider value={thresholdPink} onChange={setThresholdPink} min={10} max={100} />
@@ -186,17 +191,21 @@ export default function FairThresholds() {
               fontSize={13}
               xDomain={[10, 99]}
               yDomain={[0, 10]}
-              colorDomain={[unsuitableLabel, suitableLabel]}
-              colorRange={['#cab2d6', '#6a3d9a']}
+              colorDomain={[suitableLabel, unsuitableLabel]}
+              colorRange={[GROUP_COLORS.pinkville, UNSUITABLE_COLOR]}
               marginLeft={40}
             />
             <GroupMetrics metrics={metricsPink} lang={lang} />
           </CardContent>
         </Card>
 
-        <Card sx={{ borderTop: '3px solid #33a02c', minWidth: 0 }}>
+        <Card sx={{ borderTop: `3px solid ${GROUP_COLORS.greenfield}`, minWidth: 0 }}>
           <CardContent>
-            <Typography variant="h6" gutterBottom sx={{ color: '#33a02c' }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: GROUP_COLORS.greenfield }}
+            >
               {t('fairThresholds.thresholdGreenfield')}
             </Typography>
             <ThresholdSlider
@@ -213,8 +222,8 @@ export default function FairThresholds() {
               fontSize={13}
               xDomain={[10, 99]}
               yDomain={[0, 10]}
-              colorDomain={[unsuitableLabel, suitableLabel]}
-              colorRange={['#b2df8a', '#33a02c']}
+              colorDomain={[suitableLabel, unsuitableLabel]}
+              colorRange={[GROUP_COLORS.greenfield, UNSUITABLE_COLOR]}
               marginLeft={40}
             />
             <GroupMetrics metrics={metricsGreen} lang={lang} />
@@ -240,16 +249,14 @@ export default function FairThresholds() {
           {
             key: 'pinkville',
             label: t('data.pinkville'),
-            color: '#6a3d9a',
-            paleColor: '#cab2d6',
+            color: GROUP_COLORS.pinkville,
             threshold: thresholdPink,
             rows: pinkvilleDisplay,
           },
           {
             key: 'greenfield',
             label: t('data.greenfield'),
-            color: '#33a02c',
-            paleColor: '#b2df8a',
+            color: GROUP_COLORS.greenfield,
             threshold: thresholdGreen,
             rows: greenfieldDisplay,
           },
@@ -265,7 +272,6 @@ export default function FairThresholds() {
               rows={group.rows}
               threshold={group.threshold}
               color={group.color}
-              paleColor={group.paleColor}
               groupLabel={group.label}
             />
           </Paper>
@@ -347,7 +353,7 @@ export default function FairThresholds() {
             }}
           >
             <Box>
-              <Typography variant="subtitle2" sx={{ color: '#6a3d9a' }}>
+              <Typography variant="subtitle2" sx={{ color: GROUP_COLORS.pinkville }}>
                 {t('data.pinkville')}
               </Typography>
               <ConfusionMatrix
@@ -359,7 +365,7 @@ export default function FairThresholds() {
               />
             </Box>
             <Box>
-              <Typography variant="subtitle2" sx={{ color: '#33a02c' }}>
+              <Typography variant="subtitle2" sx={{ color: GROUP_COLORS.greenfield }}>
                 {t('data.greenfield')}
               </Typography>
               <ConfusionMatrix

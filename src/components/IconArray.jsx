@@ -3,21 +3,22 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { classify, countClasses, sortByClass } from '../utils/classify'
+import { UNSUITABLE_COLOR } from '../palette'
 
 const COLUMNS = 20
 const CELL = 24
 const ICON = 20
 
-const TN_STROKE = '#9e9e9e'
-
 /**
  * One figure per application, grouped into the four confusion-matrix blocks:
- * TP, FP, FN, TN. The score plays no role. Class is encoded without relying on
- * hue: filled = invited, outline = not invited; dark = suitable, light/grey =
- * unsuitable. Works in greyscale and for colour-vision deficiencies.
+ * TP, FP, FN, TN. The score plays no role. Hue encodes suitability (group
+ * colour = suitable, grey = unsuitable), fill encodes the invitation: filled =
+ * invited, outline = not invited. The fill/outline contrast carries the
+ * invitation independently of hue; grey is clearly lighter than lilac and only
+ * a little lighter than green, so in greyscale the legend carries the counts.
  * Counts are printed below the grid because nobody counts 77 figures.
  */
-export function IconArray({ rows, threshold, color, paleColor, groupLabel }) {
+export function IconArray({ rows, threshold, color, groupLabel }) {
   const { t } = useTranslation()
   const rawId = useId()
   const symbolId = `person-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`
@@ -30,16 +31,16 @@ export function IconArray({ rows, threshold, color, paleColor, groupLabel }) {
 
   const iconStyles = {
     tp: { fill: color },
-    fp: { fill: paleColor },
+    fp: { fill: UNSUITABLE_COLOR },
     fn: { fill: 'none', stroke: color, strokeWidth: 1.6 },
-    tn: { fill: 'none', stroke: TN_STROKE, strokeWidth: 1.6 },
+    tn: { fill: 'none', stroke: UNSUITABLE_COLOR, strokeWidth: 1.6 },
   }
 
   const swatchStyles = {
     tp: { bgcolor: color },
-    fp: { bgcolor: paleColor },
+    fp: { bgcolor: UNSUITABLE_COLOR },
     fn: { border: `1.5px solid ${color}` },
-    tn: { border: `1.5px solid ${TN_STROKE}` },
+    tn: { border: `1.5px solid ${UNSUITABLE_COLOR}` },
   }
 
   const rowCount = Math.ceil(total / COLUMNS)

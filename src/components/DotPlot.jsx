@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as Plot from '@observablehq/plot'
 import Paper from '@mui/material/Paper'
+import { NOT_INVITED_OPACITY } from '../palette'
 
 export function DotPlot({
   data,
@@ -16,6 +17,7 @@ export function DotPlot({
   colorDomain = null,
   colorRange = null,
   fillField = 'outcomeLabel',
+  dimOpacity = NOT_INVITED_OPACITY,
   showLegend = true,
   marginTop: marginTopProp,
   marginRight = 20,
@@ -60,7 +62,7 @@ export function DotPlot({
           reverse: true,
           r: 4.5,
           fillOpacity:
-            threshold != null ? (d) => (d.score < threshold ? 0.25 : 1) : 1,
+            threshold != null ? (d) => (d.score < threshold ? dimOpacity : 1) : 1,
         })
       ),
       Plot.ruleY([0]),
@@ -137,6 +139,7 @@ export function DotPlot({
     colorDomain,
     colorRange,
     fillField,
+    dimOpacity,
     showLegend,
     marginTop,
     marginRight,

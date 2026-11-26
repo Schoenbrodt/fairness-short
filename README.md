@@ -43,9 +43,21 @@ would look perfectly fair — a 100 % invitation rate for both groups is not a g
 
 Below the two group cards, each application is drawn as a small figure (20 × 10 grid per group).
 Figures are grouped into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no
-role. Class is encoded without hue: filled = invited, outline = not invited; dark = suitable,
-light or grey = unsuitable (so it works in greyscale and for colour-vision deficiencies). A
-legend below each array lists the four counts. The arrays update live with the sliders.
+role. Two dimensions are encoded independently: **hue = suitability** (lilac for men, green for
+women, grey for unsuitable in both groups) and **fill = invitation** (filled = invited, outline =
+not invited). So TP is a filled group-coloured figure, FN a group-coloured outline, FP a filled
+grey figure and TN a grey outline. The fill/outline contrast never depends on hue, and grey
+(`#9e9e9e`) is clearly lighter than lilac, so the core distinction survives greyscale; green and
+grey are closer in luminance, which is why the four counts are printed as a legend. A legend
+below each array lists the four counts. The arrays update live with the sliders.
+
+## Colour rule
+
+The same palette is used everywhere (`src/palette.js`): hue = suitability, fill/opacity =
+invitation. The two group plots on the groups page carry the group colour for suitable and grey
+for unsuitable applicants; there is no combined 400-application plot, because a single chart
+cannot show both groups and both outcomes without breaking the rule. In the threshold plots the
+dots below the threshold are dimmed to 45 % opacity instead of being recoloured.
 
 ## Notes and printing
 
@@ -59,6 +71,7 @@ current charts and metrics.
 
 ```
 src/
+├── palette.js      # class colours: hue = suitability, fill = invitation
 ├── components/     # DotPlot, IconArray, ConfusionMatrix, Notes, sliders, task boxes, layout
 ├── locales/        # de.json, en.json
 ├── pages/          # Introduction, TwoPopulations, FairThresholds, About

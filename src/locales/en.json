@@ -55,7 +55,6 @@
     "intro3": "The scores, however, differ: applications from men receive higher suitability scores on average than applications from women. The model learned from past decisions in which men were favoured.",
     "intro4": "This raises the fairness question: what does it mean when a model evaluates two groups differently even though suitability is equally distributed?",
     "scoreHint": "The score ranges from 0 to 100. The higher the score, the more likely the person is suitable for the job.",
-    "allPeople": "All 400 applications at a glance",
     "groupSize": "200 applications, 100 suitable and 100 not",
     "taskALabel": "Task 1: Compare",
     "taskA": "Describe the differences between the two distributions. How can you tell them apart?",
@@ -125,7 +124,7 @@
   },
   "iconArray": {
     "title": "All 200 applications as people",
-    "hint": "Each figure is one application: filled = invited, outline = not invited; dark = suitable, light or grey = unsuitable.",
+    "hint": "Each figure is one application: filled = invited, outline = not invited; lilac or green = suitable, grey = unsuitable.",
     "legendTp": "Correctly invited",
     "legendFp": "Unsuitable invitations",
     "legendFn": "Suitable, not invited",

@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import { loadCsv } from '../utils/loadData'
 import { getDisplayData, getOutcomeLabel } from '../utils/translateData'
+import { GROUP_COLORS, UNSUITABLE_COLOR } from '../palette'
 import { DotPlot } from '../components/DotPlot'
 import { Notes, NotesActions } from '../components/Notes'
 import { TaskBox } from '../components/TaskBox'
@@ -67,15 +68,6 @@ export default function TwoPopulations() {
         {t('twoPopulations.scoreHint')}
       </Alert>
 
-      <Typography variant="subtitle2" component="p" sx={{ mt: 3, mb: 0 }}>
-        {t('twoPopulations.allPeople')}
-      </Typography>
-      <DotPlot
-        data={displayData}
-        colorDomain={[suitableLabel, unsuitableLabel]}
-        colorRange={['#1f78b4', '#a6cee3']}
-      />
-
       <Typography variant="body1" paragraph>
         {t('twoPopulations.intro3')}
       </Typography>
@@ -94,9 +86,13 @@ export default function TwoPopulations() {
           my: 2,
         }}
       >
-        <Card sx={{ borderTop: '3px solid #6a3d9a' }}>
+        <Card sx={{ borderTop: `3px solid ${GROUP_COLORS.pinkville}` }}>
           <CardContent>
-            <Typography variant="h6" gutterBottom sx={{ color: '#6a3d9a' }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: GROUP_COLORS.pinkville }}
+            >
               {t('data.pinkville')}
             </Typography>
             <Typography variant="body2" color="text.secondary" paragraph>
@@ -107,16 +103,20 @@ export default function TwoPopulations() {
               height={200}
               fontSize={13}
               colorDomain={[suitableLabel, unsuitableLabel]}
-              colorRange={['#6a3d9a', '#cab2d6']}
+              colorRange={[GROUP_COLORS.pinkville, UNSUITABLE_COLOR]}
               yDomain={[0, 10]}
               marginLeft={40}
             />
           </CardContent>
         </Card>
 
-        <Card sx={{ borderTop: '3px solid #33a02c' }}>
+        <Card sx={{ borderTop: `3px solid ${GROUP_COLORS.greenfield}` }}>
           <CardContent>
-            <Typography variant="h6" gutterBottom sx={{ color: '#33a02c' }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: GROUP_COLORS.greenfield }}
+            >
               {t('data.greenfield')}
             </Typography>
             <Typography variant="body2" color="text.secondary" paragraph>
@@ -127,7 +127,7 @@ export default function TwoPopulations() {
               height={200}
               fontSize={13}
               colorDomain={[suitableLabel, unsuitableLabel]}
-              colorRange={['#33a02c', '#b2df8a']}
+              colorRange={[GROUP_COLORS.greenfield, UNSUITABLE_COLOR]}
               yDomain={[0, 10]}
               marginLeft={40}
             />

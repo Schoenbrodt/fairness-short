@@ -54,12 +54,19 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 - `src/pages/` — one page per route.
 - `src/components/DotPlot.jsx` — Observable Plot wrapper. It owns the `ResizeObserver`; do not
   move it back into a callback ref (React 18 ignores ref cleanup).
+- `src/palette.js` — the only place where class colours live: `GROUP_COLORS`, `UNSUITABLE_COLOR`,
+  `NOT_INVITED_OPACITY`. The rule is **hue = suitability, fill/opacity = invitation**: suitable
+  applicants keep their group colour, unsuitable applicants are the same grey in both groups.
+  Keep this module free of React and i18n, and use it instead of inline hex values.
 - `src/components/IconArray.jsx` — one SVG with a `<symbol>` reused 200 times per group, so no
   `ResizeObserver` is needed; the fixed `viewBox` scales with the container. Figures are grouped
-  into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no role. Class is
-  encoded without hue — filled = invited, outline = not invited, dark = suitable, light/grey =
-  unsuitable — so the array works in greyscale and for colour-vision deficiencies. Do not
-  reintroduce a red/green/amber class palette. Counts are printed as a legend below.
+  into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no role. Hue encodes
+  suitability (group colour = suitable, grey = unsuitable), fill encodes the invitation (filled =
+  invited, outline = not invited): TP filled group colour, FN group-colour outline, FP filled
+  grey, TN grey outline. The fill/outline difference never depends on hue; grey (`#9e9e9e`) is
+  clearly lighter than lilac and about 12 % lighter than green, so hue alone would not separate
+  green from grey in a greyscale print — the legend carries the counts. Do not reintroduce a
+  red/green/amber class palette. Counts are printed as a legend below.
 - `src/utils/classify.js` — pure `classify`, `countClasses`, `sortByClass` for the icon array.
   Keep it free of React and i18n; `countClasses` must stay equal to the confusion matrix.
 - `src/utils/calculateMetrics.js` — pure metrics. It takes the canonical `group` key and
