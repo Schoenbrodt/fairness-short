@@ -58,7 +58,11 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
   toggles the panel below (`view` state: `icons` default, `dots`). Switching the view must not
   unmount the sliders or the metrics, and the choice is deliberately not persisted
   (`localStorage` holds only the language and the notes). The toggle carries `no-print`, so a
-  printout shows the active view.
+  printout shows the active view. Sliders and panels live in one CSS grid: from `md` up the DOM
+  order applies (sliders side by side, switch, panels side by side), below `md` the grid `order`
+  interleaves them per group (`1 + 3 * index` for the slider, `2 + 3 * index` for the panel) so a
+  phone shows Männer-Slider above the Männer panel and then the same for Frauen. Keep those two
+  numbers in sync when adding a group.
 - `src/components/DotPlot.jsx` — Observable Plot wrapper. It owns the `ResizeObserver`; do not
   move it back into a callback ref (React 18 ignores ref cleanup).
 - `src/palette.js` — the only place where class colours live: `GROUP_COLORS`, `UNSUITABLE_COLOR`,

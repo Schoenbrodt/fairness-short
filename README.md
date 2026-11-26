@@ -47,6 +47,10 @@ plots; title and hint follow the active view. Because the metrics sit on the sli
 stay visible in both views, and the live threshold line/dimming works in both. The toggle is
 hidden in print, so a printout shows whichever view is active.
 
+On phones the grid reorders so that each group keeps its slider directly above its own panel:
+switch, Männer slider + metrics, Männer panel, Frauen slider + metrics, Frauen panel. From `md`
+up the two sliders sit side by side, then the switch, then the two panels side by side.
+
 Below the two group cards, each application is drawn as a small figure (20 × 10 grid per group,
 12 columns on phones so the figures stay legible).
 Figures are grouped into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no
