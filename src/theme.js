@@ -39,16 +39,20 @@ const theme = createTheme({
     fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h4: {
       fontWeight: 700,
-      fontSize: '1.75rem',
+      fontSize: 'clamp(1.5rem, 7vw, 1.75rem)',
       lineHeight: 1.3,
       color: '#a57548',
+      overflowWrap: 'break-word',
+      hyphens: 'auto',
     },
     h5: {
       fontWeight: 600,
-      fontSize: '1.35rem',
+      fontSize: 'clamp(1.15rem, 5vw, 1.35rem)',
       lineHeight: 1.3,
       color: '#a57548',
       marginTop: '1.5rem',
+      overflowWrap: 'break-word',
+      hyphens: 'auto',
     },
     h6: {
       fontWeight: 600,

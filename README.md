@@ -47,7 +47,8 @@ plots; title and hint follow the active view. Because the metrics sit on the sli
 stay visible in both views, and the live threshold line/dimming works in both. The toggle is
 hidden in print, so a printout shows whichever view is active.
 
-Below the two group cards, each application is drawn as a small figure (20 × 10 grid per group).
+Below the two group cards, each application is drawn as a small figure (20 × 10 grid per group,
+12 columns on phones so the figures stay legible).
 Figures are grouped into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no
 role. Two dimensions are encoded independently: **hue = suitability** (lilac for men, green for
 women, grey for unsuitable in both groups) and **fill = invitation** (filled = invited, outline =
@@ -56,6 +57,13 @@ grey figure and TN a grey outline. The fill/outline contrast never depends on hu
 (`#9e9e9e`) is clearly lighter than lilac, so the core distinction survives greyscale; green and
 grey are closer in luminance, which is why the four counts are printed as a legend. A legend
 below each array lists the four counts. The arrays update live with the sliders.
+
+## Mobile
+
+The layout is checked at 320, 390, 768 and 1440 px. Three rules keep long German pages inside the
+viewport: headings use `clamp()` sizes plus `overflowWrap`/`hyphens` in `src/theme.js`, grid
+children that contain a table need `minWidth: 0` (otherwise the table's min-content width pushes
+the page sideways), and the confusion matrix then scrolls inside its own `TableContainer`.
 
 ## Colour rule
 

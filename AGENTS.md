@@ -66,8 +66,10 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
   applicants keep their group colour, unsuitable applicants are the same grey in both groups.
   Keep this module free of React and i18n, and use it instead of inline hex values.
 - `src/components/IconArray.jsx` — one SVG with a `<symbol>` reused 200 times per group, so no
-  `ResizeObserver` is needed; the fixed `viewBox` scales with the container. Figures are grouped
-  into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no role. Hue encodes
+  `ResizeObserver` is needed; the fixed `viewBox` scales with the container. The grid has 20
+  columns on desktop and 12 below the `sm` breakpoint, so phones get bigger figures. Figures are
+  grouped into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no role. Hue
+  encodes
   suitability (group colour = suitable, grey = unsuitable), fill encodes the invitation (filled =
   invited, outline = not invited): TP filled group colour, FN group-colour outline, FP filled
   grey, TN grey outline. The fill/outline difference never depends on hue; grey (`#9e9e9e`) is
@@ -115,6 +117,14 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 (exact/approximate, tie-breaks, range), icon-array classification and ordering, and locale
 formatting. Add a test for any change to `calculateMetrics`, `findThresholdForMetric`,
 `translateData`, `classify` or `format`.
+
+## Mobile
+
+The layout is checked at 320, 390, 768 and 1440 px. Headings use `clamp()` sizes plus
+`overflowWrap`/`hyphens` so long German words are not clipped; any grid child that contains a
+table needs `minWidth: 0`, otherwise the table's min-content width pushes the page sideways. The
+confusion matrix then scrolls inside its own `TableContainer`, and the icon array drops to 12
+columns below `sm`.
 
 ## Notes and sharing
 

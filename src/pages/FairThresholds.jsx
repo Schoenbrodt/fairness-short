@@ -364,6 +364,10 @@ export default function FairThresholds() {
               display: 'grid',
               gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
               gap: 2,
+              // Without minWidth: 0 the grid item is as wide as the table and
+              // pushes the page sideways on phones; the TableContainer then
+              // scrolls on its own.
+              '& > *': { minWidth: 0 },
             }}
           >
             <Box>

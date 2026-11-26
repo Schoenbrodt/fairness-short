@@ -2,10 +2,13 @@ import { useId, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import { classify, countClasses, sortByClass } from '../utils/classify'
 import { UNSUITABLE_COLOR } from '../palette'
 
-const COLUMNS = 20
+const WIDE_COLUMNS = 20
+const NARROW_COLUMNS = 12
 const CELL = 24
 const ICON = 20
 
@@ -17,9 +20,15 @@ const ICON = 20
  * invitation independently of hue; grey is clearly lighter than lilac and only
  * a little lighter than green, so in greyscale the legend carries the counts.
  * Counts are printed below the grid because nobody counts 77 figures.
+ *
+ * The grid has 20 columns on desktop and 12 on phones: the fixed viewBox keeps
+ * scaling with the container, and fewer columns mean bigger figures.
  */
 export function IconArray({ rows, threshold, color, groupLabel }) {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isNarrow = useMediaQuery(theme.breakpoints.down('sm'))
+  const columns = isNarrow ? NARROW_COLUMNS : WIDE_COLUMNS
   const rawId = useId()
   const symbolId = `person-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`
 
@@ -43,7 +52,7 @@ export function IconArray({ rows, threshold, color, groupLabel }) {
     tn: { border: `1.5px solid ${UNSUITABLE_COLOR}` },
   }
 
-  const rowCount = Math.ceil(total / COLUMNS)
+  const rowCount = Math.ceil(total / columns)
 
   const legend = [
     [
@@ -59,7 +68,7 @@ export function IconArray({ rows, threshold, color, groupLabel }) {
   return (
     <Box>
       <svg
-        viewBox={`0 0 ${COLUMNS * CELL} ${rowCount * CELL}`}
+        viewBox={`0 0 ${columns * CELL} ${rowCount * CELL}`}
         role="img"
         aria-label={t('iconArray.ariaLabel', {
           group: groupLabel,
@@ -81,8 +90,8 @@ export function IconArray({ rows, threshold, color, groupLabel }) {
           <use
             key={index}
             href={`#${symbolId}`}
-            x={(index % COLUMNS) * CELL + (CELL - ICON) / 2}
-            y={Math.floor(index / COLUMNS) * CELL + (CELL - ICON) / 2}
+            x={(index % columns) * CELL + (CELL - ICON) / 2}
+            y={Math.floor(index / columns) * CELL + (CELL - ICON) / 2}
             width={ICON}
             height={ICON}
             {...iconStyles[classify(row.score, row.outcome, threshold)]}
