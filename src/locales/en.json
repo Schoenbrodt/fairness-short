@@ -65,7 +65,7 @@
   "fairThresholds": {
     "title": "Fair Decision Thresholds!?",
     "lede": "You are a fairness advisor. Set the rules for hiring.",
-    "intro": "The two charts show the suitability scores of the two groups separately. Use the sliders to set the score from which an interview invitation is sent. You can choose different thresholds for the two groups — or a single shared threshold.",
+    "intro": "You see the suitability scores of the two groups separately – below as people or as dots. Use the sliders to set the score from which an interview invitation is sent. You can choose different thresholds for the two groups — or a single shared threshold.",
     "ruleTitle": "The decision rule",
     "ruleText": "If an application's score is at or above the threshold, the person is invited to an interview. If it is below, they are not.",
     "measuresTitle": "The metrics",
@@ -130,6 +130,13 @@
     "legendFn": "Suitable, not invited",
     "legendTn": "Unsuitable, not invited",
     "ariaLabel": "{{group}}: {{total}} applications – {{tp}} correctly invited, {{fp}} unsuitable invitations, {{fn}} suitable and not invited, {{tn}} unsuitable and not invited."
+  },
+  "views": {
+    "label": "Choose the view",
+    "icons": "People",
+    "dots": "Dots",
+    "dotsTitle": "All 200 applications as dots",
+    "dotsHint": "Each dot is one application; the height counts how many applications share that score. Lilac or green = suitable, grey = unsuitable; dots below the threshold are dimmed."
   },
   "notes": {
     "label": "Your note",

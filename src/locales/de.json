@@ -65,7 +65,7 @@
   "fairThresholds": {
     "title": "Faire Entscheidungsgrenzen!?",
     "lede": "Du bist Fairnessberaterin oder Fairnessberater. Lege die Regeln für die Personalauswahl fest.",
-    "intro": "In den beiden Diagrammen siehst du die Eignungsscores der beiden Gruppen getrennt. Mit den Slidern legst du fest, ab welchem Score eine Einladung zum Vorstellungsgespräch ausgesprochen wird. Du kannst für beide Gruppen unterschiedliche Grenzen wählen – oder eine gemeinsame.",
+    "intro": "Du siehst die Eignungsscores der beiden Gruppen getrennt – unten als Personen oder als Punkte. Mit den Slidern legst du fest, ab welchem Score eine Einladung zum Vorstellungsgespräch ausgesprochen wird. Du kannst für beide Gruppen unterschiedliche Grenzen wählen – oder eine gemeinsame.",
     "ruleTitle": "Die Entscheidungsregel",
     "ruleText": "Liegt der Score einer Bewerbung auf oder über der Grenze, wird die Person zum Vorstellungsgespräch eingeladen. Liegt er darunter, wird sie nicht eingeladen.",
     "measuresTitle": "Die Kennzahlen",
@@ -130,6 +130,13 @@
     "legendFn": "Geeignet, nicht eingeladen",
     "legendTn": "Ungeeignet, nicht eingeladen",
     "ariaLabel": "{{group}}: {{total}} Bewerbungen – {{tp}} richtig eingeladen, {{fp}} Fehleinladungen, {{fn}} geeignet und nicht eingeladen, {{tn}} ungeeignet und nicht eingeladen."
+  },
+  "views": {
+    "label": "Darstellung wählen",
+    "icons": "Personen",
+    "dots": "Punkte",
+    "dotsTitle": "Alle 200 Bewerbungen als Punkte",
+    "dotsHint": "Jeder Punkt ist eine Bewerbung, die Höhe zählt die Bewerbungen mit diesem Score. Lila oder grün = geeignet, grau = nicht geeignet; Punkte unterhalb der Grenze sind abgeblendet."
   },
   "notes": {
     "label": "Deine Notiz",

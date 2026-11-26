@@ -10,6 +10,8 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CircularProgress from '@mui/material/CircularProgress'
 import Paper from '@mui/material/Paper'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { loadCsv } from '../utils/loadData'
@@ -74,6 +76,7 @@ export default function FairThresholds() {
   const [strategy, setStrategy] = useState('independent')
   const [thresholdPink, setThresholdPink] = useState(70)
   const [thresholdGreenManual, setThresholdGreenManual] = useState(70)
+  const [view, setView] = useState('icons')
 
   useEffect(() => {
     loadCsv('./data/distribution.csv').then(setRawData)
@@ -147,6 +150,32 @@ export default function FairThresholds() {
   const showApproximation =
     (strategy === 'samePositiveRates' || strategy === 'sameTruePositiveRates') && !greenLink.exact
 
+  // One entry per group: the slider card and whichever view is active read from it.
+  const groups = [
+    {
+      key: 'pinkville',
+      label: t('data.pinkville'),
+      sliderTitle: t('fairThresholds.thresholdPinkville'),
+      color: GROUP_COLORS.pinkville,
+      threshold: thresholdPink,
+      onThresholdChange: setThresholdPink,
+      sliderDisabled: false,
+      metrics: metricsPink,
+      rows: pinkvilleDisplay,
+    },
+    {
+      key: 'greenfield',
+      label: t('data.greenfield'),
+      sliderTitle: t('fairThresholds.thresholdGreenfield'),
+      color: GROUP_COLORS.greenfield,
+      threshold: thresholdGreen,
+      onThresholdChange: handleGreenChange,
+      sliderDisabled: isLinked,
+      metrics: metricsGreen,
+      rows: greenfieldDisplay,
+    },
+  ]
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
@@ -174,68 +203,54 @@ export default function FairThresholds() {
           my: 2,
         }}
       >
-        <Card sx={{ borderTop: `3px solid ${GROUP_COLORS.pinkville}`, minWidth: 0 }}>
-          <CardContent>
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{ color: GROUP_COLORS.pinkville }}
-            >
-              {t('fairThresholds.thresholdPinkville')}
-            </Typography>
-            <ThresholdSlider value={thresholdPink} onChange={setThresholdPink} min={10} max={100} />
-            <DotPlot
-              data={pinkvilleDisplay}
-              threshold={thresholdPink}
-              height={200}
-              fontSize={13}
-              xDomain={[10, 99]}
-              yDomain={[0, 10]}
-              colorDomain={[suitableLabel, unsuitableLabel]}
-              colorRange={[GROUP_COLORS.pinkville, UNSUITABLE_COLOR]}
-              marginLeft={40}
-            />
-            <GroupMetrics metrics={metricsPink} lang={lang} />
-          </CardContent>
-        </Card>
-
-        <Card sx={{ borderTop: `3px solid ${GROUP_COLORS.greenfield}`, minWidth: 0 }}>
-          <CardContent>
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{ color: GROUP_COLORS.greenfield }}
-            >
-              {t('fairThresholds.thresholdGreenfield')}
-            </Typography>
-            <ThresholdSlider
-              value={thresholdGreen}
-              onChange={handleGreenChange}
-              min={10}
-              max={100}
-              disabled={isLinked}
-            />
-            <DotPlot
-              data={greenfieldDisplay}
-              threshold={thresholdGreen}
-              height={200}
-              fontSize={13}
-              xDomain={[10, 99]}
-              yDomain={[0, 10]}
-              colorDomain={[suitableLabel, unsuitableLabel]}
-              colorRange={[GROUP_COLORS.greenfield, UNSUITABLE_COLOR]}
-              marginLeft={40}
-            />
-            <GroupMetrics metrics={metricsGreen} lang={lang} />
-          </CardContent>
-        </Card>
+        {groups.map((group) => (
+          <Card key={group.key} sx={{ borderTop: `3px solid ${group.color}`, minWidth: 0 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom sx={{ color: group.color }}>
+                {group.sliderTitle}
+              </Typography>
+              <ThresholdSlider
+                value={group.threshold}
+                onChange={group.onThresholdChange}
+                min={10}
+                max={100}
+                disabled={group.sliderDisabled}
+              />
+              <GroupMetrics metrics={group.metrics} lang={lang} />
+            </CardContent>
+          </Card>
+        ))}
       </Box>
 
-      <Typography variant="h5" sx={{ mt: 4 }} gutterBottom>
-        {t('iconArray.title')}
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          columnGap: 2,
+          rowGap: 1,
+          mt: 4,
+          mb: 1,
+        }}
+      >
+        <Typography variant="h5" sx={{ mt: 0 }}>
+          {view === 'icons' ? t('iconArray.title') : t('views.dotsTitle')}
+        </Typography>
+        <ToggleButtonGroup
+          className="no-print"
+          size="small"
+          exclusive
+          value={view}
+          onChange={(_, next) => next && setView(next)}
+          aria-label={t('views.label')}
+        >
+          <ToggleButton value="icons">{t('views.icons')}</ToggleButton>
+          <ToggleButton value="dots">{t('views.dots')}</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
       <Typography variant="body2" color="text.secondary" paragraph>
-        {t('iconArray.hint')}
+        {view === 'icons' ? t('iconArray.hint') : t('views.dotsHint')}
       </Typography>
       <Box
         sx={{
@@ -245,22 +260,7 @@ export default function FairThresholds() {
           mb: 2,
         }}
       >
-        {[
-          {
-            key: 'pinkville',
-            label: t('data.pinkville'),
-            color: GROUP_COLORS.pinkville,
-            threshold: thresholdPink,
-            rows: pinkvilleDisplay,
-          },
-          {
-            key: 'greenfield',
-            label: t('data.greenfield'),
-            color: GROUP_COLORS.greenfield,
-            threshold: thresholdGreen,
-            rows: greenfieldDisplay,
-          },
-        ].map((group) => (
+        {groups.map((group) => (
           <Paper key={group.key} variant="outlined" sx={{ p: 2 }}>
             <Typography
               variant="subtitle1"
@@ -268,12 +268,26 @@ export default function FairThresholds() {
             >
               {group.label}
             </Typography>
-            <IconArray
-              rows={group.rows}
-              threshold={group.threshold}
-              color={group.color}
-              groupLabel={group.label}
-            />
+            {view === 'icons' ? (
+              <IconArray
+                rows={group.rows}
+                threshold={group.threshold}
+                color={group.color}
+                groupLabel={group.label}
+              />
+            ) : (
+              <DotPlot
+                data={group.rows}
+                threshold={group.threshold}
+                height={200}
+                fontSize={13}
+                xDomain={[10, 99]}
+                yDomain={[0, 10]}
+                colorDomain={[suitableLabel, unsuitableLabel]}
+                colorRange={[group.color, UNSUITABLE_COLOR]}
+                marginLeft={40}
+              />
+            )}
           </Paper>
         ))}
       </Box>

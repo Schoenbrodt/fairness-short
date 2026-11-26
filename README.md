@@ -39,7 +39,13 @@ unsuitable invitations** (`fp`, „Fehleinladungen“), i.e. applications above 
 ground truth is “unsuitable”. Those counts are the quality brake: without them, inviting everyone
 would look perfectly fair — a 100 % invitation rate for both groups is not a good outcome.
 
-## Icon array
+## Icon array and dot plots
+
+The thresholds page keeps the two sliders and their metrics in one card row. Below it, a
+`Personen | Punkte` toggle switches the panel between the icon array (the default) and the dot
+plots; title and hint follow the active view. Because the metrics sit on the slider cards, they
+stay visible in both views, and the live threshold line/dimming works in both. The toggle is
+hidden in print, so a printout shows whichever view is active.
 
 Below the two group cards, each application is drawn as a small figure (20 × 10 grid per group).
 Figures are grouped into the four confusion-matrix blocks TP, FP, FN, TN and the score plays no

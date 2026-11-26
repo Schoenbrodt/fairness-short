@@ -10,8 +10,10 @@ automated hiring. It keeps only the two interactive chapters of the larger app:
    “Male”); the town names are gone. Men are the favoured group: their scores are higher on
    average, reflecting biased past hiring decisions.
 2. **Fair hiring thresholds** — two sliders, three linking strategies, invitation rate, hit rate,
-   accuracy and unsuitable invitations on each group card. Below the cards, an icon array shows
-   one figure per application; the confusion matrices remain optional details in an accordion.
+   accuracy and unsuitable invitations on each slider card. Below the cards a
+   `ToggleButtonGroup` switches between the icon array (default) and the dot plots; the metrics
+   live on the slider cards, so they are visible in both views. The confusion matrices remain
+   optional details in an accordion.
 
 The underlying teaching activity is about credit scoring; this app uses a hiring story. The
 threshold decides who is **invited to an interview**, not who is hired. The short version
@@ -52,6 +54,11 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
   (print / clear). The print stylesheet is in `src/styles/custom.css`; keep `.no-print`,
   `.notes-input` and `.notes-print` in sync.
 - `src/pages/` — one page per route.
+  `FairThresholds.jsx` keeps the sliders and the per-group metrics in the top card row and only
+  toggles the panel below (`view` state: `icons` default, `dots`). Switching the view must not
+  unmount the sliders or the metrics, and the choice is deliberately not persisted
+  (`localStorage` holds only the language and the notes). The toggle carries `no-print`, so a
+  printout shows the active view.
 - `src/components/DotPlot.jsx` — Observable Plot wrapper. It owns the `ResizeObserver`; do not
   move it back into a callback ref (React 18 ignores ref cleanup).
 - `src/palette.js` — the only place where class colours live: `GROUP_COLORS`, `UNSUITABLE_COLOR`,
