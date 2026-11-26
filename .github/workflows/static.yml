@@ -9,18 +9,13 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     # Actions are pinned to exact patch versions on purpose: a floating `@v4` moves
     # with every upstream release without review. Bump deliberately and re-run.
@@ -47,6 +42,21 @@ jobs:
         with:
           path: dist
 
+  # A separate job on purpose. Uploading and deploying in one job races the
+  # artifacts API: on 2026-11-26 two runs failed with "Found 0 artifact(s)"
+  # although the upload step was green and the artifact existed seconds later.
+  # `needs: build` starts the deploy only after the upload job has finished, so
+  # the artifact is registered before deploy-pages looks it up.
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5.0.1
