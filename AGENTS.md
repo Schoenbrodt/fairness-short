@@ -6,12 +6,13 @@ This is the standalone, public short version of the fairness learning activity, 
 automated hiring. It keeps only the two interactive chapters of the larger app:
 
 1. **Two applicant groups** — the suitability-score distributions of Pinkville and Greenfield.
-2. **Fair hiring thresholds** — two sliders, three linking strategies, offer rate, hit rate,
-   unsuitable hires and a 4/5 check. Accuracy and the confusion matrices are optional details.
+2. **Fair hiring thresholds** — two sliders, three linking strategies, invitation rate, hit rate,
+   unsuitable invitations. Accuracy and the confusion matrices are optional details.
 
 The underlying teaching activity is about credit scoring; this app uses a hiring story. The
-short version deliberately has no monetary value. The quality brake is the number of unsuitable
-hires (`fp`), shown on each group card.
+threshold decides who is **invited to an interview**, not who is hired. The short version
+deliberately has no monetary value. The quality brake is the number of unsuitable invitations
+(`fp`, „Fehleinladungen“), shown on each group card.
 
 The app is German and English, runs entirely in the browser, and stores only the language
 choice and the learner's notes in `localStorage`. Do not reintroduce the other chapters, the
@@ -55,14 +56,11 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 - `findThresholdForMetric` in the same module — searches thresholds in `[min, max]`
   (default `[10, 100]`) and returns `{ threshold, exact, metricValue }`. Ties go to the threshold
   closest to `reference`, then to the higher threshold.
-- `src/utils/fairnessCheck.js` — pure 4/5 logic: `fairnessCheck(rateA, rateB)` returns
-  `{ level, ratio }` (`green` ≥ 0.8, `yellow` ≥ 0.6, otherwise `red`; both rates 0 → `none`),
-  and `hitRateGap` returns the absolute difference. Keep it free of React and i18n.
 - `src/utils/format.js` — locale-aware percentages via `Intl.NumberFormat`. Use it instead of
   appending `%` in JSX.
-- `src/components/FairnessCheck.jsx` — renders the 4/5 card, the traffic-light chip, the
-  hit-rate difference, the total number of unsuitable hires and the caveat. Do not present the traffic light as a universal fairness
-  verdict; it only checks offer rates.
+- There is no four-fifths / 4/5 check. It was removed from the short version; do not bring it
+  back, and do not present a traffic light as a fairness verdict. The quality brake is the
+  per-group `fp` count.
 - `src/lang.js` / `src/i18n.js` — the URL is the source of truth for the language. Do not
   hardcode `lng`; keep `<html lang>` and `document.title` in sync.
 - `public/data/distribution.csv` — the only dataset. Keep the CSV schema stable.
@@ -77,7 +75,9 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 - All visible UI text belongs in `src/locales/de.json` and `src/locales/en.json`. Keep both
   files in sync.
 - The short UI has no monetary value. Do not reintroduce a euro metric without updating the
-  teaching copy and the 5-minute design. The quality brake is `fp` / „Fehlbesetzungen“.
+  teaching copy and the 5-minute design. The quality brake is `fp` / „Fehleinladungen“
+  (invited although unsuitable). Use “Einladung zum Vorstellungsgespräch”, not “Stellenangebot”:
+  the threshold produces interview invitations, and suitability is only settled later.
 - The About page contains the licence, authors, the adaptation note and the legal
   notice/privacy text. Before a public deployment, check that the imprint details are still
   correct for the target domain.
@@ -86,8 +86,8 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 
 `npm test` runs `node --test src/utils/*.test.js`. The suite covers the dataset shape (400 rows,
 200 per group, 100/100 outcomes), the confusion matrix at threshold 70, the group totals, empty groups, threshold search
-(exact/approximate, tie-breaks, range), the 4/5 bands including 0/0, and locale formatting. Add a test for any change to `calculateMetrics`, `findThresholdForMetric`, `translateData`,
-`fairnessCheck` or `format`.
+(exact/approximate, tie-breaks, range), and locale formatting. Add a test for any change to `calculateMetrics`, `findThresholdForMetric`, `translateData`
+or `format`.
 
 ## Notes and sharing
 

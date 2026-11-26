@@ -32,16 +32,12 @@ npm run preview   # http://localhost:4174/
 The language comes from the URL. It is remembered in `localStorage` under `fairness.lang`.
 `<html lang>` and the document title follow the active language.
 
-## The fairness check
+## The quality brake
 
-The thresholds page shows a **4/5 check for the offer rates**: green at 80 % or more, yellow from
-60–80 %, red below 60 %. The 80 % line follows the four-fifths rule; the lower bands are a
-didactic choice. A note makes clear that the check only covers offer rates — the hit-rate
-difference is shown separately — and that it is a rule of thumb, not a statistical test.
-
-Each group card also shows the **number of unsuitable hires**, and the check card sums them as
-**Fehlbesetzungen gesamt**. This is the quality brake: without it, offering everyone a job would
-look perfectly fair.
+There is no four-fifths / 4/5 check in this short version. Each group card shows the **number of
+unsuitable invitations** (`fp`, „Fehleinladungen“), i.e. applications above the threshold whose
+ground truth is “unsuitable”. Those counts are the quality brake: without them, inviting everyone
+would look perfectly fair — a 100 % invitation rate for both groups is not a good outcome.
 
 ## Notes and printing
 
@@ -55,10 +51,10 @@ current charts and metrics.
 
 ```
 src/
-├── components/     # DotPlot, ConfusionMatrix, FairnessCheck, Notes, sliders, task boxes, layout
+├── components/     # DotPlot, ConfusionMatrix, Notes, sliders, task boxes, layout
 ├── locales/        # de.json, en.json
 ├── pages/          # Introduction, TwoPopulations, FairThresholds, About
-├── utils/          # CSV loading, display labels, metrics, 4/5 check, formatting
+├── utils/          # CSV loading, display labels, metrics, threshold search, formatting
 ├── styles/         # global overrides and print styles
 ├── App.jsx         # routes
 ├── i18n.js         # i18next setup

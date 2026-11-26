@@ -18,7 +18,6 @@ import { calculateMetrics, findThresholdForMetric } from '../utils/calculateMetr
 import { formatPercent } from '../utils/format'
 import { DotPlot } from '../components/DotPlot'
 import { ConfusionMatrix } from '../components/ConfusionMatrix'
-import { FairnessCheck } from '../components/FairnessCheck'
 import { FairnessRadio } from '../components/FairnessRadio'
 import { Notes, NotesActions } from '../components/Notes'
 import { TaskBox } from '../components/TaskBox'
@@ -161,53 +160,6 @@ export default function FairThresholds() {
         <Typography variant="body2">{t('fairThresholds.ruleText')}</Typography>
       </Paper>
 
-      <Paper variant="outlined" sx={{ p: 2, my: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          {t('fairThresholds.measuresTitle')}
-        </Typography>
-        <Typography variant="body2" paragraph>
-          {t('fairThresholds.measuresIntro')}
-        </Typography>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
-            gap: 1.5,
-          }}
-        >
-          {metricDefinitions.map((key) => (
-            <Typography
-              key={key}
-              variant="body2"
-              dangerouslySetInnerHTML={{ __html: t(key) }}
-            />
-          ))}
-        </Box>
-      </Paper>
-
-      <Card variant="outlined" sx={{ my: 3 }}>
-        <CardContent>
-          <FairnessRadio
-            value={strategy}
-            onChange={setStrategy}
-            label={t('fairThresholds.strategyQuestion')}
-          />
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            {t('fairThresholds.strategyHint')}
-          </Typography>
-          {showApproximation && (
-            <Alert severity="info" sx={{ mt: 1.5 }}>
-              {t('fairThresholds.approximateHint')}
-            </Alert>
-          )}
-          <Box sx={{ mt: 2 }}>
-            <Button variant="outlined" size="small" onClick={reset}>
-              {t('fairThresholds.reset')}
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
-
       <Box
         sx={{
           display: 'grid',
@@ -265,15 +217,62 @@ export default function FairThresholds() {
         </Card>
       </Box>
 
-      <FairnessCheck
-        offerRateA={metricsPink.positiveRate}
-        offerRateB={metricsGreen.positiveRate}
-        hitRateA={metricsPink.truePositiveRate}
-        hitRateB={metricsGreen.truePositiveRate}
-        falseHiresA={metricsPink.fp}
-        falseHiresB={metricsGreen.fp}
-        lang={lang}
-      />
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+          alignItems: 'start',
+          gap: 2.5,
+          my: 2,
+        }}
+      >
+        <Paper variant="outlined" sx={{ p: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            {t('fairThresholds.measuresTitle')}
+          </Typography>
+          <Typography variant="body2" paragraph>
+            {t('fairThresholds.measuresIntro')}
+          </Typography>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+              gap: 1.5,
+            }}
+          >
+            {metricDefinitions.map((key) => (
+              <Typography
+                key={key}
+                variant="body2"
+                dangerouslySetInnerHTML={{ __html: t(key) }}
+              />
+            ))}
+          </Box>
+        </Paper>
+
+        <Card variant="outlined" sx={{ minWidth: 0 }}>
+          <CardContent>
+            <FairnessRadio
+              value={strategy}
+              onChange={setStrategy}
+              label={t('fairThresholds.strategyQuestion')}
+            />
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              {t('fairThresholds.strategyHint')}
+            </Typography>
+            {showApproximation && (
+              <Alert severity="info" sx={{ mt: 1.5 }}>
+                {t('fairThresholds.approximateHint')}
+              </Alert>
+            )}
+            <Box sx={{ mt: 2 }}>
+              <Button variant="outlined" size="small" onClick={reset}>
+                {t('fairThresholds.reset')}
+              </Button>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
 
       <Accordion sx={{ my: 3 }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>

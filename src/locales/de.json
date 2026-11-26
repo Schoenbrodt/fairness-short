@@ -18,14 +18,14 @@
   "common": {
     "tasks": "Aufgaben",
     "sum": "Summe",
-    "predictionOffer": "Vorhersage: Angebot",
-    "predictionNoOffer": "Vorhersage: kein Angebot",
+    "predictionOffer": "Vorhersage: Einladung",
+    "predictionNoOffer": "Vorhersage: keine Einladung",
     "dataSuitable": "Daten: geeignet",
     "dataUnsuitable": "Daten: nicht geeignet",
     "accuracy": "Genauigkeit",
-    "positiveRate": "Angebotsrate",
+    "positiveRate": "Einladungsquote",
     "truePositiveRate": "Trefferquote",
-    "falseHires": "Fehlbesetzungen",
+    "falseHires": "Fehleinladungen",
     "previous": "Zurück",
     "next": "Weiter"
   },
@@ -35,15 +35,15 @@
   },
   "intro": {
     "title": "Fairness in der Personalauswahl",
-    "lede": "Wie sollte ein Algorithmus entscheiden, wer ein Stellenangebot bekommt?",
+    "lede": "Wie sollte ein Algorithmus entscheiden, wer zum Vorstellungsgespräch eingeladen wird?",
     "p1": "Ein Unternehmen nutzt ein Modell, das aus früheren Einstellungen gelernt hat und jeder Bewerbung einen Eignungsscore gibt.",
-    "p2": "Du legst fest, ab welchem Score ein Stellenangebot gemacht wird – für beide Bewerbergruppen getrennt oder gemeinsam.",
+    "p2": "Du legst fest, ab welchem Score eine Einladung zum Vorstellungsgespräch ausgesprochen wird – für beide Bewerbergruppen getrennt oder gemeinsam.",
     "p3": "Die Scores sind in den beiden Gruppen unterschiedlich verteilt. Das Modell hat aus früheren Einstellungen gelernt, in denen eine Gruppe bevorzugt wurde.",
     "p4": "Schau dir zuerst die beiden Bewerbergruppen an und entscheide dann, welche Entscheidungsgrenzen fair sind.",
     "note": "Alle Personen und Orte sind fiktiv. Die Eignung ist in dieser Aktivität vereinfachend für alle bekannt.",
     "start": "Zu den zwei Bewerbergruppen",
     "scoreTitle": "Eignungsscore und Entscheidungsgrenze",
-    "scoreText": "Score ≥ Grenze: Stellenangebot. Score < Grenze: kein Stellenangebot.",
+    "scoreText": "Score ≥ Grenze: Einladung zum Vorstellungsgespräch. Score < Grenze: keine Einladung.",
     "dataTitle": "Der Datensatz",
     "dataText": "400 Bewerbungen aus zwei Gruppen. In beiden Gruppen sind je 100 Personen geeignet und 100 nicht."
   },
@@ -66,9 +66,9 @@
   "fairThresholds": {
     "title": "Faire Entscheidungsgrenzen!?",
     "lede": "Du bist Fairnessberaterin oder Fairnessberater. Lege die Regeln für die Personalauswahl fest.",
-    "intro": "In den beiden Diagrammen siehst du die Eignungsscores der beiden Gruppen getrennt. Mit den Slidern legst du fest, ab welchem Score ein Stellenangebot gemacht wird. Du kannst für beide Gruppen unterschiedliche Grenzen wählen – oder eine gemeinsame.",
+    "intro": "In den beiden Diagrammen siehst du die Eignungsscores der beiden Gruppen getrennt. Mit den Slidern legst du fest, ab welchem Score eine Einladung zum Vorstellungsgespräch ausgesprochen wird. Du kannst für beide Gruppen unterschiedliche Grenzen wählen – oder eine gemeinsame.",
     "ruleTitle": "Die Entscheidungsregel",
-    "ruleText": "Liegt der Score einer Bewerbung auf oder über der Grenze, bekommt die Person ein Stellenangebot. Liegt er darunter, bekommt sie keins.",
+    "ruleText": "Liegt der Score einer Bewerbung auf oder über der Grenze, wird die Person zum Vorstellungsgespräch eingeladen. Liegt er darunter, wird sie nicht eingeladen.",
     "measuresTitle": "Die Kennzahlen",
     "measuresIntro": "Drei Kennzahlen fassen die Entscheidungen zusammen:",
     "detailsTitle": "Genauigkeit und Konfusionsmatrix (für Interessierte)",
@@ -76,16 +76,16 @@
     "strategyQuestion": "Wie soll die Grenze für Grünhausen gesetzt werden?",
     "strategyTitle": "Strategie für Grünhausen",
     "strategyHint": "Die drei „Gleiche …“-Strategien setzen die Grenze für Grünhausen automatisch. Bei „Unabhängig“ kannst du sie selbst einstellen.",
-    "approximateHint": "Die Scores sind diskret. „Gleiche Angebotsraten“ und „Gleiche Trefferquoten“ sind deshalb oft nur näherungsweise erreichbar.",
+    "approximateHint": "Die Scores sind diskret. „Gleiche Einladungsquoten“ und „Gleiche Trefferquoten“ sind deshalb oft nur näherungsweise erreichbar.",
     "independent": "Unabhängig von Pinklandia",
     "sameThresholds": "Gleiche Entscheidungsgrenzen",
-    "samePositiveRates": "Gleiche Angebotsraten",
+    "samePositiveRates": "Gleiche Einladungsquoten",
     "sameTruePositiveRates": "Gleiche Trefferquoten",
     "thresholdPinkville": "Entscheidungsgrenze Pinklandia",
     "thresholdGreenfield": "Entscheidungsgrenze Grünhausen",
     "reset": "Auf 70/70 zurücksetzen",
     "task1Label": "Aufgabe 1: Ausprobieren",
-    "task1": "Wähle nacheinander die vier Strategien. Was passiert mit den Angebotsraten und Trefferquoten der beiden Gruppen?",
+    "task1": "Wähle nacheinander die vier Strategien. Was passiert mit den Einladungsquoten und Trefferquoten der beiden Gruppen?",
     "task2Label": "Aufgabe 2: Entscheiden",
     "task2": "Welche Grenzen wählst du? Begründe in einem Satz.",
     "task3Label": "Aufgabe 3: Beurteilen",
@@ -118,9 +118,9 @@
     "adaptationNote": "Diese Kurzfassung überträgt die Idee auf die Personalauswahl. Die Studie selbst untersucht Fairness in der Kreditvergabe."
   },
   "measures": {
-    "defPositiveRate": "<b>Angebotsrate:</b> Anteil der Bewerbungen, die ein Stellenangebot bekommen.",
-    "defTruePositiveRate": "<b>Trefferquote:</b> Anteil der geeigneten Personen, die ein Stellenangebot bekommen.",
-    "defFalseHires": "<b>Fehlbesetzungen:</b> Anzahl der ungeeigneten Personen, die ein Stellenangebot bekommen."
+    "defPositiveRate": "<b>Einladungsquote:</b> Anteil der Bewerbungen, die zum Vorstellungsgespräch eingeladen werden.",
+    "defTruePositiveRate": "<b>Trefferquote:</b> Anteil der geeigneten Personen, die zum Vorstellungsgespräch eingeladen werden.",
+    "defFalseHires": "<b>Fehleinladungen:</b> Anzahl der ungeeigneten Personen, die zum Vorstellungsgespräch eingeladen werden."
   },
   "notes": {
     "label": "Deine Notiz",
@@ -129,21 +129,5 @@
     "clear": "Notizen löschen",
     "confirmClear": "Alle Notizen auf diesem Gerät löschen?",
     "printHint": "Beim Drucken werden die aktuellen Grafiken und deine Notizen ausgegeben."
-  },
-  "fairnessCheck": {
-    "title": "4/5-Check: Angebotsraten",
-    "ratio": "Verhältnis: {{value}}",
-    "offerRates": "Angebotsraten: {{a}} · {{b}}",
-    "hitGap": "Trefferquoten-Differenz: {{value}} Prozentpunkte",
-    "noOffers": "Keine Angebote in beiden Gruppen.",
-    "legend": "Grün: ab 80 % · Gelb: 60–80 % · Rot: unter 60 %",
-    "note": "Die 80-%-Schwelle orientiert sich an der Vier-Fünftel-Regel; die Stufen darunter sind didaktisch. Der Check prüft nur die Angebotsraten – gleiche Trefferquoten sind eine andere Fairness-Idee. Faustregel, kein statistischer Test.",
-    "level": {
-      "green": "grün",
-      "yellow": "gelb",
-      "red": "rot",
-      "none": "keine Angebote"
-    },
-    "falseHiresTotal": "Fehlbesetzungen gesamt: {{value}}"
   }
 }

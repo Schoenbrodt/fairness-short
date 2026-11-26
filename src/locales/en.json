@@ -18,14 +18,14 @@
   "common": {
     "tasks": "Tasks",
     "sum": "Sum",
-    "predictionOffer": "Prediction: offer",
-    "predictionNoOffer": "Prediction: no offer",
+    "predictionOffer": "Prediction: invitation",
+    "predictionNoOffer": "Prediction: no invitation",
     "dataSuitable": "Data: suitable",
     "dataUnsuitable": "Data: not suitable",
     "accuracy": "Accuracy",
-    "positiveRate": "Offer rate",
+    "positiveRate": "Invitation rate",
     "truePositiveRate": "Hit rate",
-    "falseHires": "Unsuitable hires",
+    "falseHires": "Unsuitable invitations",
     "previous": "Previous",
     "next": "Next"
   },
@@ -35,15 +35,15 @@
   },
   "intro": {
     "title": "Fairness in Hiring",
-    "lede": "How should an algorithm decide who gets a job offer?",
+    "lede": "How should an algorithm decide who is invited to an interview?",
     "p1": "A company uses a model that learned from past hiring decisions and gives every application a suitability score.",
-    "p2": "You set the score from which a job offer is made — separately for the two applicant groups or jointly.",
+    "p2": "You set the score from which an interview invitation is sent — separately for the two applicant groups or jointly.",
     "p3": "The scores are distributed differently in the two groups. The model learned from past decisions in which one group was favoured.",
     "p4": "First look at the two applicant groups, then decide which decision thresholds are fair.",
     "note": "All people and places are fictional. In this activity, suitability is assumed to be known for everyone.",
     "start": "Start with the two applicant groups",
     "scoreTitle": "Suitability score and decision threshold",
-    "scoreText": "Score ≥ threshold: job offer. Score < threshold: no job offer.",
+    "scoreText": "Score ≥ threshold: interview invitation. Score < threshold: no invitation.",
     "dataTitle": "The dataset",
     "dataText": "400 applications from two groups. Each group has 100 suitable and 100 unsuitable applicants."
   },
@@ -66,9 +66,9 @@
   "fairThresholds": {
     "title": "Fair Decision Thresholds!?",
     "lede": "You are a fairness advisor. Set the rules for hiring.",
-    "intro": "The two charts show the suitability scores of the two groups separately. Use the sliders to set the score from which a job offer is made. You can choose different thresholds for the two groups — or a single shared threshold.",
+    "intro": "The two charts show the suitability scores of the two groups separately. Use the sliders to set the score from which an interview invitation is sent. You can choose different thresholds for the two groups — or a single shared threshold.",
     "ruleTitle": "The decision rule",
-    "ruleText": "If an application's score is at or above the threshold, the person gets a job offer. If it is below, they do not.",
+    "ruleText": "If an application's score is at or above the threshold, the person is invited to an interview. If it is below, they are not.",
     "measuresTitle": "The metrics",
     "measuresIntro": "Three metrics summarize the decisions:",
     "detailsTitle": "Accuracy and confusion matrix (for the curious)",
@@ -76,16 +76,16 @@
     "strategyQuestion": "How should Greenfield's threshold be set?",
     "strategyTitle": "Strategy for Greenfield",
     "strategyHint": "The three “Same …” strategies set Greenfield's threshold automatically. With “Independent”, you can set it yourself.",
-    "approximateHint": "Scores are discrete. “Same offer rates” and “same hit rates” can therefore often only be approximated.",
+    "approximateHint": "Scores are discrete. “Same invitation rates” and “same hit rates” can therefore often only be approximated.",
     "independent": "Independent from Pinkville",
     "sameThresholds": "Same decision thresholds",
-    "samePositiveRates": "Same offer rates",
+    "samePositiveRates": "Same invitation rates",
     "sameTruePositiveRates": "Same hit rates",
     "thresholdPinkville": "Decision threshold Pinkville",
     "thresholdGreenfield": "Decision threshold Greenfield",
     "reset": "Reset to 70/70",
     "task1Label": "Task 1: Explore",
-    "task1": "Try the four strategies one after another. What happens to the offer rates and hit rates of the two groups?",
+    "task1": "Try the four strategies one after another. What happens to the invitation rates and hit rates of the two groups?",
     "task2Label": "Task 2: Decide",
     "task2": "Which thresholds do you choose? Explain in one sentence.",
     "task3Label": "Task 3: Evaluate",
@@ -118,9 +118,9 @@
     "adaptationNote": "This short version adapts the idea to hiring. The study itself examines fairness in credit scoring."
   },
   "measures": {
-    "defPositiveRate": "<b>Offer rate:</b> Share of applications that receive a job offer.",
-    "defTruePositiveRate": "<b>Hit rate:</b> Share of suitable applicants who receive a job offer.",
-    "defFalseHires": "<b>Unsuitable hires:</b> Number of unsuitable applicants who receive a job offer."
+    "defPositiveRate": "<b>Invitation rate:</b> Share of applications that receive an interview invitation.",
+    "defTruePositiveRate": "<b>Hit rate:</b> Share of suitable applicants who receive an interview invitation.",
+    "defFalseHires": "<b>Unsuitable invitations:</b> Number of unsuitable applicants who receive an interview invitation."
   },
   "notes": {
     "label": "Your note",
@@ -129,21 +129,5 @@
     "clear": "Clear notes",
     "confirmClear": "Delete all notes on this device?",
     "printHint": "Printing includes the current charts and your notes."
-  },
-  "fairnessCheck": {
-    "title": "4/5 check: offer rates",
-    "ratio": "Ratio: {{value}}",
-    "offerRates": "Offer rates: {{a}} · {{b}}",
-    "hitGap": "Hit-rate difference: {{value}} percentage points",
-    "noOffers": "No offers in either group.",
-    "legend": "Green: 80 %+ · Yellow: 60–80 % · Red: below 60 %",
-    "note": "The 80 % line follows the four-fifths rule; the lower bands are a didactic choice. The check only covers offer rates — equal hit rates are a different fairness idea. A rule of thumb, not a statistical test.",
-    "level": {
-      "green": "green",
-      "yellow": "yellow",
-      "red": "red",
-      "none": "no offers"
-    },
-    "falseHiresTotal": "Unsuitable hires in total: {{value}}"
   }
 }
