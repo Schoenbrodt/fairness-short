@@ -35,17 +35,12 @@
   },
   "intro": {
     "title": "Fairness in Hiring",
-    "lede": "How should an algorithm decide who is invited to an interview?",
-    "p1": "A company uses a model that learned from past hiring decisions and gives every application a suitability score. The applicants are women and men.",
-    "p2": "You set the score from which an interview invitation is sent — separately for the two applicant groups or jointly.",
-    "p3": "The scores are distributed differently in the two groups. The model learned from past decisions in which one group was favoured.",
-    "p4": "First look at the two applicant groups, then decide which decision thresholds are fair.",
-    "note": "All people are fictional. In this activity, suitability is assumed to be known for everyone.",
+    "lede": "Should an algorithm decide who is invited to an interview?",
+    "p1": "A company uses a model that gives every application a suitability score. You are the fairness advisor and set the score from which applicants are invited — separately for the two groups or jointly.",
+    "note": "All people are fictional.",
     "start": "Start with the two applicant groups",
     "scoreTitle": "Suitability score and decision threshold",
-    "scoreText": "Score ≥ threshold: interview invitation. Score < threshold: no invitation.",
-    "dataTitle": "The dataset",
-    "dataText": "400 applications from two groups. Each group has 100 suitable and 100 unsuitable applicants."
+    "scoreText": "Score ≥ threshold → invitation. Score < threshold → no invitation."
   },
   "twoPopulations": {
     "title": "Two Applicant Groups",
@@ -65,18 +60,17 @@
   "fairThresholds": {
     "title": "Fair Decision Thresholds!?",
     "lede": "You are a fairness advisor. Set the rules for hiring.",
-    "intro": "You see the suitability scores of the two groups separately – below as people or as dots. Use the sliders to set the score from which an interview invitation is sent. You can choose different thresholds for the two groups — or a single shared threshold.",
+    "intro": "Use the sliders to set the score from which an interview invitation is sent. You can choose different thresholds for the two groups — or a single shared threshold.",
     "ruleTitle": "The decision rule",
     "ruleText": "If an application's score is at or above the threshold, the person is invited to an interview. If it is below, they are not.",
     "measuresTitle": "The metrics",
-    "measuresIntro": "Four metrics summarize the decisions:",
-    "detailsTitle": "Confusion matrix (for the curious)",
+    "detailsTitle": "Confusion matrix",
     "confusionHint": "In the confusion matrix, the rows are actual suitability and the columns are the model's prediction.",
     "strategyQuestion": "How should the threshold for women be set?",
     "strategyTitle": "Strategy for women",
-    "strategyHint": "The three “Same …” strategies set the threshold for women automatically. With “Independent”, you can set it yourself.",
+    "strategyHint": "The three “Same …” strategies set the threshold for women automatically. With “Own threshold for women”, you can set it yourself.",
     "approximateHint": "Scores are discrete. “Same invitation rates” and “same hit rates” can therefore often only be approximated.",
-    "independent": "Independent of men",
+    "independent": "Own threshold for women",
     "sameThresholds": "Same decision thresholds",
     "samePositiveRates": "Same invitation rates",
     "sameTruePositiveRates": "Same hit rates",
@@ -123,8 +117,7 @@
     "defFalseHires": "<b>Unsuitable invitations:</b> Number of unsuitable applicants who receive an interview invitation."
   },
   "iconArray": {
-    "title": "All 200 applications as people",
-    "hint": "Each figure is one application: filled = invited, outline = not invited; lilac or green = suitable, grey = unsuitable.",
+    "hint": "Each figure is one application.",
     "legendTp": "Correctly invited",
     "legendFp": "Unsuitable invitations",
     "legendFn": "Suitable, not invited",
@@ -133,9 +126,9 @@
   },
   "views": {
     "label": "Choose the view",
+    "title": "200 applications per group",
     "icons": "People",
     "dots": "Dots",
-    "dotsTitle": "All 200 applications as dots",
     "dotsHint": "Each dot is one application; the height counts how many applications share that score. Lilac or green = suitable, grey = unsuitable; dots below the threshold are dimmed."
   },
   "notes": {

@@ -35,17 +35,12 @@
   },
   "intro": {
     "title": "Fairness in der Personalauswahl",
-    "lede": "Wie sollte ein Algorithmus entscheiden, wer zum Vorstellungsgespräch eingeladen wird?",
-    "p1": "Ein Unternehmen nutzt ein Modell, das aus früheren Einstellungen gelernt hat und jeder Bewerbung einen Eignungsscore gibt. Beworben haben sich Frauen und Männer.",
-    "p2": "Du legst fest, ab welchem Score eine Einladung zum Vorstellungsgespräch ausgesprochen wird – für beide Bewerbergruppen getrennt oder gemeinsam.",
-    "p3": "Die Scores sind in den beiden Gruppen unterschiedlich verteilt. Das Modell hat aus früheren Einstellungen gelernt, in denen eine Gruppe bevorzugt wurde.",
-    "p4": "Schau dir zuerst die beiden Bewerbergruppen an und entscheide dann, welche Entscheidungsgrenzen fair sind.",
-    "note": "Alle Personen sind fiktiv. Die Eignung ist in dieser Aktivität vereinfachend für alle bekannt.",
+    "lede": "Sollte ein Algorithmus entscheiden, wer zum Vorstellungsgespräch eingeladen wird?",
+    "p1": "Ein Unternehmen nutzt ein Modell, das jeder Bewerbung einen Eignungsscore gibt. Du bist Fairnessberater:in und legst fest, ab welchem Score eingeladen wird, für beide Gruppen getrennt oder gemeinsam.",
+    "note": "Alle Personen sind fiktiv.",
     "start": "Zu den zwei Bewerbergruppen",
     "scoreTitle": "Eignungsscore und Entscheidungsgrenze",
-    "scoreText": "Score ≥ Grenze: Einladung zum Vorstellungsgespräch. Score < Grenze: keine Einladung.",
-    "dataTitle": "Der Datensatz",
-    "dataText": "400 Bewerbungen aus zwei Gruppen. In beiden Gruppen sind je 100 Personen geeignet und 100 nicht."
+    "scoreText": "Score ≥ Grenze → Einladung. Score < Grenze → keine Einladung."
   },
   "twoPopulations": {
     "title": "Zwei Bewerbergruppen",
@@ -64,19 +59,18 @@
   },
   "fairThresholds": {
     "title": "Faire Entscheidungsgrenzen!?",
-    "lede": "Du bist Fairnessberaterin oder Fairnessberater. Lege die Regeln für die Personalauswahl fest.",
-    "intro": "Du siehst die Eignungsscores der beiden Gruppen getrennt – unten als Personen oder als Punkte. Mit den Slidern legst du fest, ab welchem Score eine Einladung zum Vorstellungsgespräch ausgesprochen wird. Du kannst für beide Gruppen unterschiedliche Grenzen wählen – oder eine gemeinsame.",
+    "lede": "Du bist Fairnessberater:in. Lege die Regeln für die Personalauswahl fest.",
+    "intro": "Mit den Slidern legst du fest, ab welchem Score eine Einladung zum Vorstellungsgespräch ausgesprochen wird. Du kannst für beide Gruppen unterschiedliche Grenzen wählen – oder eine gemeinsame.",
     "ruleTitle": "Die Entscheidungsregel",
     "ruleText": "Liegt der Score einer Bewerbung auf oder über der Grenze, wird die Person zum Vorstellungsgespräch eingeladen. Liegt er darunter, wird sie nicht eingeladen.",
     "measuresTitle": "Die Kennzahlen",
-    "measuresIntro": "Vier Kennzahlen fassen die Entscheidungen zusammen:",
-    "detailsTitle": "Konfusionsmatrix (für Interessierte)",
+    "detailsTitle": "Konfusionsmatrix",
     "confusionHint": "In der Konfusionsmatrix stehen die Zeilen für die tatsächliche Eignung und die Spalten für die Vorhersage des Modells.",
     "strategyQuestion": "Wie soll die Grenze für Frauen gesetzt werden?",
     "strategyTitle": "Strategie für Frauen",
-    "strategyHint": "Die drei „Gleiche …“-Strategien setzen die Grenze für Frauen automatisch. Bei „Unabhängig“ kannst du sie selbst einstellen.",
+    "strategyHint": "Die drei „Gleiche …“-Strategien setzen die Grenze für Frauen automatisch. Bei „Eigene Grenze für Frauen“ kannst du sie selbst einstellen.",
     "approximateHint": "Die Scores sind diskret. „Gleiche Einladungsquoten“ und „Gleiche Trefferquoten“ sind deshalb oft nur näherungsweise erreichbar.",
-    "independent": "Unabhängig von Männern",
+    "independent": "Eigene Grenze für Frauen",
     "sameThresholds": "Gleiche Entscheidungsgrenzen",
     "samePositiveRates": "Gleiche Einladungsquoten",
     "sameTruePositiveRates": "Gleiche Trefferquoten",
@@ -123,8 +117,7 @@
     "defFalseHires": "<b>Fehleinladungen:</b> Anzahl der ungeeigneten Personen, die zum Vorstellungsgespräch eingeladen werden."
   },
   "iconArray": {
-    "title": "Alle 200 Bewerbungen als Personen",
-    "hint": "Jede Figur steht für eine Bewerbung: gefüllt = eingeladen, Kontur = nicht eingeladen; lila oder grün = geeignet, grau = nicht geeignet.",
+    "hint": "Jede Figur steht für eine Bewerbung.",
     "legendTp": "Richtig eingeladen",
     "legendFp": "Fehleinladungen",
     "legendFn": "Geeignet, nicht eingeladen",
@@ -133,9 +126,9 @@
   },
   "views": {
     "label": "Darstellung wählen",
+    "title": "200 Bewerbungen pro Gruppe",
     "icons": "Personen",
     "dots": "Punkte",
-    "dotsTitle": "Alle 200 Bewerbungen als Punkte",
     "dotsHint": "Jeder Punkt ist eine Bewerbung, die Höhe zählt die Bewerbungen mit diesem Score. Lila oder grün = geeignet, grau = nicht geeignet; Punkte unterhalb der Grenze sind abgeblendet."
   },
   "notes": {

@@ -245,7 +245,7 @@ export default function FairThresholds() {
             }}
           >
             <Typography variant="h5" sx={{ mt: 0 }}>
-              {view === 'icons' ? t('iconArray.title') : t('views.dotsTitle')}
+              {t('views.title')}
             </Typography>
             <ToggleButtonGroup
               className="no-print"
@@ -316,9 +316,6 @@ export default function FairThresholds() {
         <Paper variant="outlined" sx={{ p: 2 }}>
           <Typography variant="h6" gutterBottom>
             {t('fairThresholds.measuresTitle')}
-          </Typography>
-          <Typography variant="body2" paragraph>
-            {t('fairThresholds.measuresIntro')}
           </Typography>
           <Box
             sx={{
