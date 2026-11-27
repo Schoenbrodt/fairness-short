@@ -6,10 +6,8 @@
     "switchLang": "English"
   },
   "nav": {
-    "intro": "Einleitung: Faire Personalauswahl",
-    "introShort": "Einleitung",
-    "twoGroups": "Daten",
-    "twoGroupsShort": "Daten",
+    "data": "Einstieg & Daten",
+    "dataShort": "Einstieg & Daten",
     "fair": "Faire Entscheidungsgrenzen!?",
     "fairShort": "Fairness",
     "about": "Über",
@@ -38,7 +36,6 @@
     "lede": "Sollte ein Algorithmus entscheiden, wer zum Vorstellungsgespräch eingeladen wird?",
     "p1": "Ein Unternehmen nutzt ein Modell, das jeder Bewerbung einen Eignungsscore gibt. Du bist Fairnessberater:in und legst fest, ab welchem Score eingeladen wird, für beide Gruppen getrennt oder gemeinsam.",
     "note": "Alle Personen sind fiktiv.",
-    "start": "Zu den Daten",
     "scoreTitle": "Eignungsscore und Entscheidungsgrenze",
     "scoreText": "Score ≥ Grenze → Einladung. Score < Grenze → keine Einladung."
   },

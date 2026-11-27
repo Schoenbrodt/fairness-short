@@ -6,10 +6,8 @@
     "switchLang": "Deutsch"
   },
   "nav": {
-    "intro": "Introduction: Fair Hiring",
-    "introShort": "Intro",
-    "twoGroups": "Data",
-    "twoGroupsShort": "Data",
+    "data": "Start & data",
+    "dataShort": "Start & data",
     "fair": "Fair decision thresholds!?",
     "fairShort": "Fairness",
     "about": "About",
@@ -38,7 +36,6 @@
     "lede": "Should an algorithm decide who is invited to an interview?",
     "p1": "A company uses a model that gives every application a suitability score. You are the fairness advisor and set the score from which applicants are invited — separately for the two groups or jointly.",
     "note": "All people are fictional.",
-    "start": "To the data",
     "scoreTitle": "Suitability score and decision threshold",
     "scoreText": "Score ≥ threshold → invitation. Score < threshold → no invitation."
   },

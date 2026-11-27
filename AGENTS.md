@@ -3,13 +3,15 @@
 ## Project overview
 
 This is the standalone, public short version of the fairness learning activity, adapted to
-automated hiring. It keeps only the two interactive chapters of the larger app:
+automated hiring. It keeps two pages of the larger app:
 
-1. **Two applicant groups** — the suitability-score distributions of female (`greenfield`) and
-   male (`pinkville`) applicants. The UI labels them “Weiblich” / “Männlich” (English “Female” /
-   “Male”); the town names are gone. Men are the favoured group: their scores are higher on
-   average, reflecting biased past hiring decisions.
-2. **Fair hiring thresholds** — two sliders, three linking strategies, invitation rate, hit rate,
+1. **Entry and data** (`/:lang`, one page) — the guiding question, the decision rule and the
+   suitability-score distributions of female (`greenfield`) and male (`pinkville`) applicants.
+   The UI labels them “Frauen” / “Männer” (English “Women” / “Men”); the town names are gone. Men
+   are the favoured group: their scores are higher on average, reflecting biased past hiring
+   decisions. The framing and the data share one page on purpose: the rule is needed to read the
+   data, and a separate cover page cost one screen of navigation for five lines of text.
+2. **Fair hiring thresholds** (`/:lang/thresholds`) — two sliders, three linking strategies, invitation rate, hit rate,
    accuracy and unsuitable invitations on each slider card. Below the cards a
    `ToggleButtonGroup` switches between the icon array (default) and the dot plots; the metrics
    live on the slider cards, so they are visible in both views. The confusion matrices remain
@@ -47,13 +49,18 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 
 ## Structure
 
-- `src/App.jsx` — routes: `/:lang`, `/:lang/groups`, `/:lang/thresholds`, `/:lang/about`.
-- `src/components/Layout.jsx` — header, three-step navigation, prev/next, footer.
-- `src/components/StepNav.jsx` — the three steps. Keep the app linear.
+- `src/App.jsx` — routes: `/:lang` (entry + data), `/:lang/thresholds`, `/:lang/about`, plus
+  `/:lang/groups` which redirects to `/:lang` so older links keep working.
+- `src/components/Layout.jsx` — header, two-step navigation, prev/next, footer.
+- `src/components/StepNav.jsx` — the two steps. Keep the app linear; the step list drives the
+  prev/next buttons and the “1 / 2” counter, so adding a page means adding it there.
 - `src/components/Notes.jsx` — `Notes` (localStorage-backed field) and `NotesActions`
   (print / clear). The print stylesheet is in `src/styles/custom.css`; keep `.no-print`,
   `.notes-input` and `.notes-print` in sync.
 - `src/pages/` — one page per route.
+  `Data.jsx` renders the framing first and the distributions/tasks only once the CSV is loaded, so
+  the intro is visible while the data arrives. The note ids (`groups-a`, `groups-b`) are kept
+  stable so existing notes survive the merge of the old two pages.
   `FairThresholds.jsx` keeps the sliders and the per-group metrics in the top card row and only
   toggles the panel below (`view` state: `icons` default, `dots`). Switching the view must not
   unmount the sliders or the metrics, and the choice is deliberately not persisted

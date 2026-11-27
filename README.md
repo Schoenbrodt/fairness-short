@@ -24,8 +24,8 @@ npm run preview   # http://localhost:4174/
 
 | Route | Content |
 | --- | --- |
-| `/#/de` / `/#/en` | Landing: automated hiring and the fairness question |
-| `/#/de/groups` / `/#/en/groups` | Two applicant groups |
+| `/#/de` / `/#/en` | Entry and data: fairness question, decision rule, both distributions |
+| `/#/de/groups` / `/#/en/groups` | Redirect to `/#/de` (the page was split off in an earlier version) |
 | `/#/de/thresholds` / `/#/en/thresholds` | Fair hiring thresholds |
 | `/#/de/about` / `/#/en/about` | Article, authors, licence, funding |
 
@@ -72,9 +72,9 @@ the page sideways), and the confusion matrix then scrolls inside its own `TableC
 ## Colour rule
 
 The same palette is used everywhere (`src/palette.js`): hue = suitability, fill/opacity =
-invitation. The two group plots on the groups page carry the group colour for suitable and grey
-for unsuitable applicants; there is no combined 400-application plot, because a single chart
-cannot show both groups and both outcomes without breaking the rule. In the threshold plots the
+invitation. The two group plots on the data page carry the group colour for suitable and grey for
+unsuitable applicants; there is no combined 400-application plot, because a single chart cannot
+show both groups and both outcomes without breaking the rule. In the threshold plots the
 dots below the threshold are dimmed to 45 % opacity instead of being recoloured.
 
 ## Notes and printing
@@ -92,7 +92,7 @@ src/
 ├── palette.js      # class colours: hue = suitability, fill = invitation
 ├── components/     # DotPlot, IconArray, ConfusionMatrix, Notes, sliders, task boxes, layout
 ├── locales/        # de.json, en.json
-├── pages/          # Introduction, TwoPopulations, FairThresholds, About
+├── pages/          # Data (entry + distributions), FairThresholds, About
 ├── utils/          # CSV loading, display labels, metrics, classification, threshold search, formatting
 ├── styles/         # global overrides and print styles
 ├── App.jsx         # routes

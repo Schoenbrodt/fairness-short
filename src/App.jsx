@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { Layout } from './components/Layout'
-import Introduction from './pages/Introduction'
-import TwoPopulations from './pages/TwoPopulations'
+import Data from './pages/Data'
 import FairThresholds from './pages/FairThresholds'
 import About from './pages/About'
 import { DEFAULT_LANG, initialLang, isLang } from './lang'
@@ -16,8 +15,9 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Navigate to={`/${initialLang()}`} replace />} />
       <Route path="/:lang" element={<Layout />}>
-        <Route index element={<Introduction />} />
-        <Route path="groups" element={<TwoPopulations />} />
+        <Route index element={<Data />} />
+        {/* The data page used to live on its own route; keep old links working. */}
+        <Route path="groups" element={<LangHome />} />
         <Route path="thresholds" element={<FairThresholds />} />
         <Route path="about" element={<About />} />
         <Route path="*" element={<LangHome />} />

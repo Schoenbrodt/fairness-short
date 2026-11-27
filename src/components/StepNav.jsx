@@ -7,8 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 
 export const steps = [
-  { path: '', key: 'intro', shortKey: 'introShort' },
-  { path: '/groups', key: 'twoGroups', shortKey: 'twoGroupsShort' },
+  { path: '', key: 'data', shortKey: 'dataShort' },
   { path: '/thresholds', key: 'fair', shortKey: 'fairShort' },
 ]
 
