@@ -8,8 +8,8 @@
   "nav": {
     "intro": "Introduction: Fair Hiring",
     "introShort": "Intro",
-    "twoGroups": "Two applicant groups",
-    "twoGroupsShort": "Groups",
+    "twoGroups": "Data",
+    "twoGroupsShort": "Data",
     "fair": "Fair decision thresholds!?",
     "fairShort": "Fairness",
     "about": "About",
@@ -30,32 +30,30 @@
     "next": "Next"
   },
   "data": {
-    "greenfield": "Female",
-    "pinkville": "Male"
+    "greenfield": "Women",
+    "pinkville": "Men"
   },
   "intro": {
     "title": "Fairness in Hiring",
     "lede": "Should an algorithm decide who is invited to an interview?",
     "p1": "A company uses a model that gives every application a suitability score. You are the fairness advisor and set the score from which applicants are invited — separately for the two groups or jointly.",
     "note": "All people are fictional.",
-    "start": "Start with the two applicant groups",
+    "start": "To the data",
     "scoreTitle": "Suitability score and decision threshold",
     "scoreText": "Score ≥ threshold → invitation. Score < threshold → no invitation."
   },
   "twoPopulations": {
-    "title": "Two Applicant Groups",
-    "subtitle": "What is in the data?",
-    "intro1": "The dataset contains 400 applications: 200 from women and 200 from men.",
-    "intro2": "Each group has 100 suitable and 100 unsuitable applicants. The starting point is therefore the same.",
-    "intro3": "The scores, however, differ: applications from men receive higher suitability scores on average than applications from women. The model learned from past decisions in which men were favoured.",
-    "intro4": "This raises the fairness question: what does it mean when a model evaluates two groups differently even though suitability is equally distributed?",
-    "scoreHint": "The score ranges from 0 to 100. The higher the score, the more likely the person is suitable for the job.",
-    "groupSize": "200 applications, 100 suitable and 100 not",
+    "title": "What is in the data?",
+    "intro1": "200 women and 200 men apply. Each group has exactly 100 suitable applicants.",
+    "intro2": "The model assigns scores from 0 to 100. It learned from past hiring decisions in which men were favoured. Men therefore receive higher scores on average.",
+    "scoreHint": "The higher the score, the more likely the person is suitable for the job.",
+    "knownOutcomesTitle": "Simplification",
+    "knownOutcomes": "Here, suitability is known. In reality, it is often only known for people who were hired.",
+    "yAxis": "Number of people",
     "taskALabel": "Task 1: Compare",
-    "taskA": "Describe the differences between the two distributions. How can you tell them apart?",
-    "taskBLabel": "Task 2: Evaluate",
-    "taskB": "Why might a single decision threshold be unfair? What should a fair decision take into account?",
-    "knownOutcomes": "In this activity, suitability is known for every application. In reality, it would often only be observable for people who were hired."
+    "taskA": "At which scores are the suitable men, and at which the suitable women? What strikes you?",
+    "taskBLabel": "Task 2: Predict",
+    "taskB": "Both groups get the threshold 60. Who is invited more often? Are suitable people invited equally often in both groups? Estimate and take notes. You can check on the next page."
   },
   "fairThresholds": {
     "title": "Fair Decision Thresholds!?",

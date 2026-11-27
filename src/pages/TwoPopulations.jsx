@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CircularProgress from '@mui/material/CircularProgress'
+import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { loadCsv } from '../utils/loadData'
 import { getDisplayData, getOutcomeLabel } from '../utils/translateData'
@@ -53,9 +54,6 @@ export default function TwoPopulations() {
       <Typography variant="h4" gutterBottom>
         {t('twoPopulations.title')}
       </Typography>
-      <Typography variant="h5" gutterBottom>
-        {t('twoPopulations.subtitle')}
-      </Typography>
 
       <Typography variant="body1" paragraph>
         {t('twoPopulations.intro1')}
@@ -68,15 +66,12 @@ export default function TwoPopulations() {
         {t('twoPopulations.scoreHint')}
       </Alert>
 
-      <Typography variant="body1" paragraph>
-        {t('twoPopulations.intro3')}
-      </Typography>
-      <Typography variant="body1" paragraph>
-        {t('twoPopulations.intro4')}
-      </Typography>
-      <Typography variant="body2" color="text.secondary" paragraph>
-        {t('twoPopulations.knownOutcomes')}
-      </Typography>
+      <Paper variant="outlined" sx={{ p: 2, my: 2 }}>
+        <Typography variant="h6" gutterBottom>
+          {t('twoPopulations.knownOutcomesTitle')}
+        </Typography>
+        <Typography variant="body2">{t('twoPopulations.knownOutcomes')}</Typography>
+      </Paper>
 
       <Box
         sx={{
@@ -95,16 +90,15 @@ export default function TwoPopulations() {
             >
               {t('data.pinkville')}
             </Typography>
-            <Typography variant="body2" color="text.secondary" paragraph>
-              {t('twoPopulations.groupSize')}
-            </Typography>
             <DotPlot
               data={pinkvilleData}
-              height={200}
+              height={220}
               fontSize={13}
+              yLabel={t('twoPopulations.yAxis')}
               colorDomain={[suitableLabel, unsuitableLabel]}
               colorRange={[GROUP_COLORS.pinkville, UNSUITABLE_COLOR]}
               yDomain={[0, 10]}
+              marginTop={34}
               marginLeft={40}
             />
           </CardContent>
@@ -119,16 +113,15 @@ export default function TwoPopulations() {
             >
               {t('data.greenfield')}
             </Typography>
-            <Typography variant="body2" color="text.secondary" paragraph>
-              {t('twoPopulations.groupSize')}
-            </Typography>
             <DotPlot
               data={greenfieldData}
-              height={200}
+              height={220}
               fontSize={13}
+              yLabel={t('twoPopulations.yAxis')}
               colorDomain={[suitableLabel, unsuitableLabel]}
               colorRange={[GROUP_COLORS.greenfield, UNSUITABLE_COLOR]}
               yDomain={[0, 10]}
+              marginTop={34}
               marginLeft={40}
             />
           </CardContent>
