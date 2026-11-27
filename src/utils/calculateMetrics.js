@@ -80,3 +80,42 @@ export function findThresholdForMetric(
 
   return { threshold: best.threshold, exact: best.exact, metricValue: best.metricValue }
 }
+
+const METRIC_BY_STRATEGY = {
+  samePositiveRates: 'positiveRate',
+  sameTruePositiveRates: 'truePositiveRate',
+  sameAccuracies: 'accuracy',
+}
+
+/**
+ * Links the two thresholds for one of the "same …" strategies.
+ *
+ * `sourceGroup` is the slider the learner just moved; the other group's threshold is the one
+ * whose `metric` matches the moved group's. Because this works in both directions, neither
+ * group is subordinate: moving the women's slider moves the men's threshold and vice versa.
+ *
+ * When several thresholds of the partner group hit the same metric value, the tie-break prefers
+ * the one near the slider that was just moved, so the two sliders stay visually close and every
+ * move produces a visible reaction.
+ * `exact` is false when the discrete scores cannot hit the target value exactly.
+ */
+export function linkThresholds(data, strategy, sourceGroup, sourceThreshold) {
+  const metric = METRIC_BY_STRATEGY[strategy]
+  const targetGroup = sourceGroup === 'pinkville' ? 'greenfield' : 'pinkville'
+
+  if (!metric) {
+    return { targetGroup, threshold: sourceThreshold, exact: true, metricValue: null }
+  }
+
+  const source = calculateMetrics(data, sourceGroup, sourceThreshold)
+  const found = findThresholdForMetric(data, targetGroup, metric, source[metric], {
+    reference: sourceThreshold,
+  })
+
+  return {
+    targetGroup,
+    threshold: found.threshold,
+    exact: found.exact,
+    metricValue: found.metricValue,
+  }
+}

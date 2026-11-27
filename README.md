@@ -32,6 +32,19 @@ npm run preview   # http://localhost:4174/
 The language comes from the URL. It is remembered in `localStorage` under `fairness.lang`.
 `<html lang>` and the document title follow the active language.
 
+## Linking strategies
+
+The thresholds page offers one independent threshold per group plus four “same …” strategies
+(decision thresholds, invitation rates, hit rates, accuracies).
+Both sliders stay movable: with a “same …” strategy selected, whichever slider the learner moves
+is the one that counts and the other group's threshold follows (`linkThresholds` in
+`src/utils/calculateMetrics.js` searches the matching threshold in both directions). When several
+thresholds hit the same metric value, the tie-break prefers the one near the slider that was just
+moved, so both sliders stay visually close and every move produces a visible reaction. Because the
+scores are discrete, the invitation and hit rates are usually only approximated, which the page
+says explicitly when the match is not exact. Choosing a strategy starts from the men's slider;
+the hint under the radio group explains the coupling.
+
 ## The quality brake
 
 There is no four-fifths / 4/5 check in this short version. Each group card shows the **number of

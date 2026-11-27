@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { loadCsv } from '../utils/loadData'
 import { getDisplayData, getOutcomeLabel } from '../utils/translateData'
-import { calculateMetrics, findThresholdForMetric } from '../utils/calculateMetrics'
+import { calculateMetrics, linkThresholds } from '../utils/calculateMetrics'
 import { formatPercent } from '../utils/format'
 import { GROUP_COLORS, UNSUITABLE_COLOR } from '../palette'
 import { DotPlot } from '../components/DotPlot'
@@ -75,7 +75,8 @@ export default function FairThresholds() {
   const [rawData, setRawData] = useState(null)
   const [strategy, setStrategy] = useState('independent')
   const [thresholdPink, setThresholdPink] = useState(70)
-  const [thresholdGreenManual, setThresholdGreenManual] = useState(70)
+  const [thresholdGreen, setThresholdGreen] = useState(70)
+  const [linkExact, setLinkExact] = useState(true)
   const [view, setView] = useState('icons')
 
   useEffect(() => {
@@ -93,45 +94,57 @@ export default function FairThresholds() {
     return calculateMetrics(rawData, 'pinkville', thresholdPink)
   }, [rawData, thresholdPink])
 
-  const greenLink = useMemo(() => {
-    if (!rawData || !metricsPink) return { threshold: thresholdGreenManual, exact: true }
-    if (strategy === 'sameThresholds') return { threshold: thresholdPink, exact: true }
-    if (strategy === 'sameTruePositiveRates') {
-      return findThresholdForMetric(
-        rawData,
-        'greenfield',
-        'truePositiveRate',
-        metricsPink.truePositiveRate,
-        { reference: thresholdPink }
-      )
-    }
-    if (strategy === 'samePositiveRates') {
-      return findThresholdForMetric(
-        rawData,
-        'greenfield',
-        'positiveRate',
-        metricsPink.positiveRate,
-        { reference: thresholdPink }
-      )
-    }
-    return { threshold: thresholdGreenManual, exact: true }
-  }, [rawData, metricsPink, strategy, thresholdPink, thresholdGreenManual])
-
-  const thresholdGreen = greenLink.threshold
-
   const metricsGreen = useMemo(() => {
     if (!rawData) return null
     return calculateMetrics(rawData, 'greenfield', thresholdGreen)
   }, [rawData, thresholdGreen])
 
-  const handleGreenChange = (val) => {
-    if (strategy === 'independent') setThresholdGreenManual(val)
+  /**
+   * Both sliders stay movable. Under a "same" strategy the slider you move wins and the other
+   * group follows, so neither group is subordinate to the other one.
+   */
+  const applyThreshold = (group, value) => {
+    if (group === 'pinkville') setThresholdPink(value)
+    else setThresholdGreen(value)
+
+    if (strategy === 'independent') return
+
+    if (strategy === 'sameThresholds') {
+      if (group === 'pinkville') setThresholdGreen(value)
+      else setThresholdPink(value)
+      setLinkExact(true)
+      return
+    }
+
+    if (!rawData) return
+    const link = linkThresholds(rawData, strategy, group, value)
+    if (link.targetGroup === 'greenfield') setThresholdGreen(link.threshold)
+    else setThresholdPink(link.threshold)
+    setLinkExact(link.exact)
+  }
+
+  const handlePinkChange = (value) => applyThreshold('pinkville', value)
+  const handleGreenChange = (value) => applyThreshold('greenfield', value)
+
+  // Choosing a "same" strategy starts from the men's slider; after that both directions work.
+  const handleStrategyChange = (next) => {
+    setStrategy(next)
+
+    if (!rawData || next === 'independent') {
+      setLinkExact(true)
+      return
+    }
+
+    const link = linkThresholds(rawData, next, 'pinkville', thresholdPink)
+    setThresholdGreen(link.threshold)
+    setLinkExact(link.exact)
   }
 
   const reset = () => {
     setStrategy('independent')
     setThresholdPink(70)
-    setThresholdGreenManual(70)
+    setThresholdGreen(70)
+    setLinkExact(true)
   }
 
   if (!displayData || !metricsPink || !metricsGreen) {
@@ -146,9 +159,8 @@ export default function FairThresholds() {
   const greenfieldDisplay = displayData.filter((d) => d.group === 'greenfield')
   const unsuitableLabel = getOutcomeLabel('unsuitable', lang)
   const suitableLabel = getOutcomeLabel('suitable', lang)
-  const isLinked = strategy !== 'independent'
   const showApproximation =
-    (strategy === 'samePositiveRates' || strategy === 'sameTruePositiveRates') && !greenLink.exact
+    ['samePositiveRates', 'sameTruePositiveRates', 'sameAccuracies'].includes(strategy) && !linkExact
 
   // One entry per group: the slider card and whichever view is active read from it.
   const groups = [
@@ -158,8 +170,7 @@ export default function FairThresholds() {
       sliderTitle: t('fairThresholds.thresholdPinkville'),
       color: GROUP_COLORS.pinkville,
       threshold: thresholdPink,
-      onThresholdChange: setThresholdPink,
-      sliderDisabled: false,
+      onThresholdChange: handlePinkChange,
       metrics: metricsPink,
       rows: pinkvilleDisplay,
     },
@@ -170,7 +181,6 @@ export default function FairThresholds() {
       color: GROUP_COLORS.greenfield,
       threshold: thresholdGreen,
       onThresholdChange: handleGreenChange,
-      sliderDisabled: isLinked,
       metrics: metricsGreen,
       rows: greenfieldDisplay,
     },
@@ -225,7 +235,6 @@ export default function FairThresholds() {
                 onChange={group.onThresholdChange}
                 min={10}
                 max={100}
-                disabled={group.sliderDisabled}
               />
               <GroupMetrics metrics={group.metrics} lang={lang} />
             </CardContent>
@@ -338,7 +347,7 @@ export default function FairThresholds() {
           <CardContent>
             <FairnessRadio
               value={strategy}
-              onChange={setStrategy}
+              onChange={handleStrategyChange}
               label={t('fairThresholds.strategyQuestion')}
             />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>

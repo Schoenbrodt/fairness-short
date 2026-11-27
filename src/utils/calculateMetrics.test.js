@@ -5,7 +5,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Papa from 'papaparse'
 
-import { calculateMetrics, findThresholdForMetric } from './calculateMetrics.js'
+import { calculateMetrics, findThresholdForMetric, linkThresholds } from './calculateMetrics.js'
 import { getDisplayData, getGroupLabel, getOutcomeLabel } from './translateData.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
@@ -162,4 +162,61 @@ test('adds display labels without changing the canonical keys', () => {
   assert.equal(getGroupLabel('greenfield', 'de'), 'Weiblich')
   assert.equal(getGroupLabel('pinkville', 'en'), 'Male')
   assert.equal(getGroupLabel('greenfield', 'en'), 'Female')
+})
+
+test('links both directions: the moved slider drives the other group', () => {
+  const forward = linkThresholds(data, 'samePositiveRates', 'pinkville', 70)
+  assert.equal(forward.targetGroup, 'greenfield')
+  assert.equal(forward.threshold, 64)
+
+  const backward = linkThresholds(data, 'samePositiveRates', 'greenfield', forward.threshold)
+  assert.equal(backward.targetGroup, 'pinkville')
+  assert.equal(backward.threshold, 70)
+})
+
+test('the linked pair keeps the metric as close as the discrete scores allow', () => {
+  // 60 is the interesting case: no threshold in the other group hits 62 % exactly.
+  for (const start of [40, 60, 70, 85]) {
+    const link = linkThresholds(data, 'sameTruePositiveRates', 'pinkville', start)
+    const source = calculateMetrics(data, 'pinkville', start)
+    const target = calculateMetrics(data, link.targetGroup, link.threshold)
+    const diff = Math.abs(target.truePositiveRate - source.truePositiveRate)
+
+    assert.ok(diff <= 1, `hit rate differs by more than one point for ${start}`)
+    assert.equal(link.exact, diff === 0)
+  }
+})
+
+test('sameThresholds copies the moved value instead of searching', () => {
+  for (const sourceGroup of ['pinkville', 'greenfield']) {
+    const link = linkThresholds(data, 'sameThresholds', sourceGroup, 55)
+    assert.equal(link.threshold, 55)
+    assert.equal(link.exact, true)
+    assert.equal(link.targetGroup, sourceGroup === 'pinkville' ? 'greenfield' : 'pinkville')
+  }
+})
+
+test('sameAccuracies links by accuracy in both directions', () => {
+  const forward = linkThresholds(data, 'sameAccuracies', 'pinkville', 70)
+  assert.equal(forward.targetGroup, 'greenfield')
+
+  const menAccuracy = calculateMetrics(data, 'pinkville', 70).accuracy
+  const womenAccuracy = calculateMetrics(data, 'greenfield', forward.threshold).accuracy
+  assert.ok(Math.abs(womenAccuracy - menAccuracy) <= 1)
+  assert.equal(forward.exact, womenAccuracy === menAccuracy)
+
+  const backward = linkThresholds(data, 'sameAccuracies', 'greenfield', forward.threshold)
+  assert.equal(backward.targetGroup, 'pinkville')
+  const backAccuracy = calculateMetrics(data, 'pinkville', backward.threshold).accuracy
+  assert.ok(Math.abs(backAccuracy - womenAccuracy) <= 1)
+})
+
+test('tie-break prefers the threshold near the slider that was moved', () => {
+  // Women at 56 reach 77 % accuracy; the men's thresholds 50, 51 and 59 reach it as well.
+  const link = linkThresholds(data, 'sameAccuracies', 'greenfield', 56)
+  assert.equal(link.threshold, 59)
+  assert.equal(
+    calculateMetrics(data, 'pinkville', link.threshold).accuracy,
+    calculateMetrics(data, 'greenfield', 56).accuracy
+  )
 })

@@ -11,8 +11,11 @@ automated hiring. It keeps two pages of the larger app:
    are the favoured group: their scores are higher on average, reflecting biased past hiring
    decisions. The framing and the data share one page on purpose: the rule is needed to read the
    data, and a separate cover page cost one screen of navigation for five lines of text.
-2. **Fair hiring thresholds** (`/:lang/thresholds`) — two sliders, three linking strategies, invitation rate, hit rate,
-   accuracy and unsuitable invitations on each slider card. Below the cards a
+2. **Fair hiring thresholds** (`/:lang/thresholds`) — two sliders, four linking strategies (same decision
+   thresholds, same invitation rates, same hit rates, same accuracies), invitation rate, hit rate,
+   accuracy and unsuitable invitations on each slider card. Both sliders stay movable: under a
+   “same …” strategy the slider the learner moves drives the other group, so neither group is
+   subordinate (do not re-disable the women's slider). Below the cards a
    `ToggleButtonGroup` switches between the icon array (default) and the dot plots; the metrics
    live on the slider cards, so they are visible in both views. The confusion matrices remain
    optional details in an accordion.
@@ -61,7 +64,9 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
   `Data.jsx` renders the framing first and the distributions/tasks only once the CSV is loaded, so
   the intro is visible while the data arrives. The note ids (`groups-a`, `groups-b`) are kept
   stable so existing notes survive the merge of the old two pages.
-  `FairThresholds.jsx` keeps the sliders and the per-group metrics in the top card row and only
+  `FairThresholds.jsx` holds both thresholds as state and links them through
+  `linkThresholds` from `utils/calculateMetrics.js`; it keeps the sliders and the per-group
+  metrics in the top card row and only
   toggles the panel below (`view` state: `icons` default, `dots`). Switching the view must not
   unmount the sliders or the metrics, and the choice is deliberately not persisted
   (`localStorage` holds only the language and the notes). The toggle carries `no-print`, so a
@@ -127,7 +132,7 @@ The dev server deliberately uses **5174**; the CAMMP workshops app uses 5173. Do
 200 per group, 100/100 outcomes), the confusion matrix at threshold 70, the group totals, empty groups, threshold search
 (exact/approximate, tie-breaks, range), icon-array classification and ordering, and locale
 formatting. Add a test for any change to `calculateMetrics`, `findThresholdForMetric`,
-`translateData`, `classify` or `format`.
+`translateData`, `classify`, `linkThresholds` or `format`.
 
 ## Mobile
 

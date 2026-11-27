@@ -13,6 +13,7 @@ export function FairnessRadio({ value, onChange, label }) {
     { key: 'sameThresholds', label: t('fairThresholds.sameThresholds') },
     { key: 'samePositiveRates', label: t('fairThresholds.samePositiveRates') },
     { key: 'sameTruePositiveRates', label: t('fairThresholds.sameTruePositiveRates') },
+    { key: 'sameAccuracies', label: t('fairThresholds.sameAccuracies') },
   ]
 
   return (
