@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -91,10 +90,6 @@ export default function Data() {
           <Typography variant="body1" paragraph>
             {t('twoPopulations.intro2')}
           </Typography>
-
-          <Alert severity="info" sx={{ my: 2 }}>
-            {t('twoPopulations.scoreHint')}
-          </Alert>
 
           <Paper variant="outlined" sx={{ p: 2, my: 2 }}>
             <Typography variant="h6" gutterBottom>
